@@ -2,6 +2,7 @@ PROGNAME=dump1090
 
 RTLSDR ?= yes
 BLADERF ?= no
+SOAPYSDR ?= no
 UNAME ?= Linux
 
 ifndef DUMP1090_VERSION
@@ -80,6 +81,25 @@ ifeq ($(BLADERF), yes)
     LIBS_SDR += -Wl,-Bstatic -lbladeRF
   else
     LIBS_SDR += -lbladeRF
+  endif
+endif
+
+ifeq ($(SOAPYSDR), yes)
+  SDR_OBJ += sdr_soapysdr.o
+  CFLAGS += -DENABLE_SOAPYSDR
+
+  ifdef SOAPYSDR_PREFIX
+    CFLAGS += -I$(SOAPYSDR_PREFIX)/include
+    LDFLAGS += -L$(SOAPYSDR_PREFIX)/lib
+  else
+    CFLAGS += $(shell pkg-config --cflags SoapySDR)
+    LDFLAGS += $(shell pkg-config --libs-only-L SoapySDR)
+  endif
+
+  ifeq ($(STATIC), yes)
+    LIBS_SDR += -Wl,-Bstatic -lSoapySDR
+  else
+    LIBS_SDR += -lSoapySDR
   endif
 endif
 

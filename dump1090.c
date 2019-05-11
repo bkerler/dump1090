@@ -496,6 +496,9 @@ static void showHelp(void) {
 #ifdef ENABLE_BLADERF
            "ENABLE_BLADERF "
 #endif
+#ifdef ENABLE_SOAPYSDR
+           "ENABLE_SOAPYSDR "
+#endif
 #ifdef SC16Q11_TABLE_BITS
     // This is a little silly, but that's how the preprocessor works..
 #define _stringize(x) #x

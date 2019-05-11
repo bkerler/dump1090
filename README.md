@@ -9,7 +9,7 @@ It is designed to build as a Debian package.
 ## Building under stretch
 
 ```bash
-$ sudo apt-get install build-essential debhelper librtlsdr-dev pkg-config dh-systemd libncurses5-dev libbladerf-dev
+$ sudo apt-get install build-essential debhelper librtlsdr-dev pkg-config dh-systemd libncurses5-dev SoapySDR libbladerf-dev
 $ dpkg-buildpackage -b
 ```
 

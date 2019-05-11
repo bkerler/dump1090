@@ -57,7 +57,7 @@ void limesdrShowHelp()
 {
     printf("      LimeSDR-specific options (use with --device-type limesdr)\n");
     printf("\n");
-    //printf("--device <ident>         select device by bladeRF 'device identifier'\n");
+    //printf("--device <ident>         select device by LimeSDR 'device identifier'\n");
     //printf("--bladerf-fpga <path>    use alternative FPGA bitstream ('' to disable FPGA load)\n");
     printf("--limesdr-decimation <N> assume FPGA decimates by a factor of N\n");
     printf("--limesdr-bandwidth <hz> set LPF bandwidth ('bypass' to bypass the LPF)\n");

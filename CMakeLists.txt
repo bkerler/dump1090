@@ -46,6 +46,20 @@ find_path(LimeSuite_INCLUDE LimeSuite.h
 	/usr/local/include/lime
 )
 
+find_library(SoapySDR names SoapySDR
+	PATHS ${SOAPYSDR_PKG_INCLUDE_DIRS}
+)
+find_path(SoapySDR_INCLUDE Device.h
+	HINTS
+	/usr/include/SoapySDR
+	/usr/local/include/SoapySDR
+)
+if(SoapySDR AND SoapySDR_INCLUDE)
+	message(STATUS "Found SoapySDR: ${SoapySDR_INCLUDE}, ${SoapySDR}")
+else(SoapySDR AND SoapySDR_INCLUDE)
+	message(STATUS "Didn't find SoapySDR: ${SoapySDR_INCLUDE}, ${SoapySDR}")
+endif(SoapySDR AND SoapySDR_INCLUDE)
+
 set(SDR_SOURCES
 	sdr.c
 	sdr.h
@@ -57,7 +71,7 @@ if(rtlsdr)
 	set(LIB_INCLUDE_DIRS "${LIB_INCLUDE_DIRS} ${rtlsdr_INCLUDE}")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DENABLE_RTLSDR")
 	set(SDR_LIBS "${SDR_LIBS} rtlsdr")
-	set(SDR_SOURCES "${SDR_SOURCES} sdr_rtlsdr.c sdr_rtlsdr.h LimeSuite.h")
+	set(SDR_SOURCES "${SDR_SOURCES} sdr_rtlsdr.c sdr_rtlsdr.h")
 endif()
 
 if(bladeRF)
@@ -65,6 +79,13 @@ if(bladeRF)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DENABLE_BLADERF")
 	set(SDR_LIBS "${SDR_LIBS} bladeRF")
 	set(SDR_SOURCES "${SDR_SOURCES} sdr_bladerf.c sdr_bladerf.h libbladeRF.h")
+endif()
+
+if(SoapySDR)
+	set(LIB_INCLUDE_DIRS ${LIB_INCLUDE_DIRS} ${SoapySDR_INCLUDE})
+	set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -DENABLE_SOAPYSDR)
+	set(SDR_LIBS ${SDR_LIBS} SoapySDR)
+	set(SDR_SOURCES ${SDR_SOURCES} sdr_soapysdr.c sdr_soapysdr.h)
 endif()
 
 if(LimeSuite)
