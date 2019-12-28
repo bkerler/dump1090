@@ -444,7 +444,7 @@ function end_load_history() {
                         console.log("Updating tracks at: " + now);
                         for (var i = 0; i < PlanesOrdered.length; ++i) {
                                 var plane = PlanesOrdered[i];
-                                plane.updateTrack((now - last) + 1);
+                                plane.updateTrack(now, last);
                         }
 
                         last = now;
@@ -860,10 +860,8 @@ function refreshPageTitle() {
         }
 
         if (MessageRateInTitle) {
-            if(MessageRate != null) {
                 if (subtitle) subtitle += ' | ';
                 subtitle += MessageRate.toFixed(1) + '/s';
-            }
         }
 
         document.title = PageName + ' - ' + subtitle;
@@ -1898,11 +1896,11 @@ function updatePiAwareOrFlightFeeder() {
 	if (isFlightFeeder) {
 		$('.piAwareLogo').hide();
 		$('.flightfeederLogo').show();
-		PageName = 'FlightFeeder Skyview';
+		PageName = 'FlightFeeder SkyAware';
 	} else {
 		$('.flightfeederLogo').hide();
 		$('.piAwareLogo').show();
-		PageName = 'PiAware Skyview';
+		PageName = 'PiAware SkyAware';
 	}
 	refreshPageTitle();
 }

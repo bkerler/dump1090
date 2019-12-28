@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "../dump1090.h"
-#include "../comm_b.h"
+#include "../lib1090/src/dump1090.h"
+#include "../lib1090/src/comm_b.h"
 
 char last_callsign[8];
 double last_callsign_ts = 0;

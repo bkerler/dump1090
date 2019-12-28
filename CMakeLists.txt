@@ -19,162 +19,46 @@ cmake_minimum_required(VERSION 3.5.1)
 
 project(dump1090)
 
-link_directories(/usr/local/lib)
-include_directories(/usr/local/include)
-
-find_library(usb-1.0 NAMES libusb-1.0 libusb)
-find_path(libusb_INCLUDE libusb.h
-	HINTS
-	/usr/include/libusb-1.0
-	/usr/local/include/libusb-1.0
-	/usr/include/libusb
-	/usr/local/include/libusb
-)
-
-set(LIB_INCLUDE_DIRS ${libusb_INCLUDE})
-
-find_library(rtlsdr NAMES librtlsdr)
-find_path(rtlsdr_INCLUDE rtl-sdr.h)
-
-find_library(bladeRF NAMES libbladeRF)
-find_path(bladeRF_INCLUDE libbladeRF.h)
-
-find_library(LimeSuite names libLimeSuite)
-find_path(LimeSuite_INCLUDE LimeSuite.h
-	HINTS
-	/usr/include/lime
-	/usr/local/include/lime
-)
-
-find_library(SoapySDR names SoapySDR
-	PATHS ${SOAPYSDR_PKG_INCLUDE_DIRS}
-)
-find_path(SoapySDR_INCLUDE Device.h
-	HINTS
-	/usr/include/SoapySDR
-	/usr/local/include/SoapySDR
-)
-if(SoapySDR AND SoapySDR_INCLUDE)
-	message(STATUS "Found SoapySDR: ${SoapySDR_INCLUDE}, ${SoapySDR}")
-else(SoapySDR AND SoapySDR_INCLUDE)
-	message(STATUS "Didn't find SoapySDR: ${SoapySDR_INCLUDE}, ${SoapySDR}")
-endif(SoapySDR AND SoapySDR_INCLUDE)
-
-set(SDR_SOURCES
-	sdr.c
-	sdr.h
-	sdr_ifile.c
-	sdr_ifile.h
-)
-
-if(rtlsdr)
-	set(LIB_INCLUDE_DIRS "${LIB_INCLUDE_DIRS} ${rtlsdr_INCLUDE}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DENABLE_RTLSDR")
-	set(SDR_LIBS "${SDR_LIBS} rtlsdr")
-	set(SDR_SOURCES "${SDR_SOURCES} sdr_rtlsdr.c sdr_rtlsdr.h")
-endif()
-
-if(bladeRF)
-	set(LIB_INCLUDE_DIRS "${LIB_INCLUDE_DIRS} ${bladeRF_INCLUDE}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DENABLE_BLADERF")
-	set(SDR_LIBS "${SDR_LIBS} bladeRF")
-	set(SDR_SOURCES "${SDR_SOURCES} sdr_bladerf.c sdr_bladerf.h libbladeRF.h")
-endif()
-
-if(SoapySDR)
-	set(LIB_INCLUDE_DIRS ${LIB_INCLUDE_DIRS} ${SoapySDR_INCLUDE})
-	set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -DENABLE_SOAPYSDR)
-	set(SDR_LIBS ${SDR_LIBS} SoapySDR)
-	set(SDR_SOURCES ${SDR_SOURCES} sdr_soapysdr.c sdr_soapysdr.h)
-endif()
-
-if(LimeSuite)
-	set(LIB_INCLUDE_DIRS "${LIB_INCLUDE_DIRS} ${LimeSuite_INCLUDE}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DENABLE_LIMESDR")
-	set(SDR_LIBS "${SDR_LIBS} LimeSuite")
-	set(SDR_SOURCES "${SDR_SOURCES} sdr_lime.c sdr_lime.h LimeSuite.h")
-endif()
-
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -g -std=c11 -Wall -Werror")
 
 set(LIB_SOURCES
-	ais_charset.c ais_charset.h
-	anet.c anet.h
-	comm_b.c comm_b.h
-	convert.c convert.h
-	cpr.c cpr.h
-	crc.c crc.h
-	demod_2400.c demod_2400.h
-	icao_filter.c icao_filter.h
-	interactive.c
-	lib1090.c lib1090.h
-	mode_ac.c
-	mode_s.c mode_s.h
-	net_io.c net_io.h
-	stats.c stats.h
-	track.c track.h
-	util.c util.h
-	dump1090.c
-	faup1090.c
-	view1090.c
-)
+		ais_charset.c ais_charset.h
+		anet.c anet.h
+		comm_b.c comm_b.h
+		convert.c convert.h
+		cpr.c cpr.h
+		crc.c crc.h
+		demod_2400.c demod_2400.h
+		icao_filter.c icao_filter.h
+		interactive.c
+		lib1090.c lib1090.h
+		mode_ac.c
+		mode_s.c mode_s.h
+		net_io.c net_io.h
+		stats.c stats.h
+		track.c track.h
+		util.c util.h
+		dump1090.c
+		faup1090.c
+		view1090.c
+		)
 
 if(APPLE)
-  #for darwin build
-  set(COMPAT_SOURCES compat/clock_nanosleep/clock_nanosleep.c compat/clock_nanosleep/clock_nanosleep.h)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMISSING_NANOSLEEP -DCLOCKID_T")
+	#for darwin build
+	set(COMPAT_SOURCES compat/clock_nanosleep/clock_nanosleep.c compat/clock_nanosleep/clock_nanosleep.h)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMISSING_NANOSLEEP -DCLOCKID_T")
 elseif(UNIX)
-  #for linux build
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEFAULT_SOURCE")
-  set(COMPAT_SOURCES)
+	#for linux build
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEFAULT_SOURCE")
+	set(COMPAT_SOURCES)
 else()
-  #for ?? build (probably broken)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
-  set(COMPAT_SOURCES)
+	#for ?? build (probably broken)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+	set(COMPAT_SOURCES)
 endif()
 
-add_library(
-	1090
+link_directories(/usr/local/lib)
+include_directories(/usr/local/include lib1090/src)
 
-	SHARED
-
-	${LIB_SOURCES}
-	${COMPAT_SOURCES}
-	${SDR_SOURCES}
-)
-
-target_link_libraries(
-	1090
-
-	${SDR_LIBS}
-	m
-	ncurses
-	usb-1.0
-	pthread
-)
-
-target_include_directories(1090 PRIVATE ${LIB_INCLUDE_DIRS})
-
-set_target_properties(
-	1090 PROPERTIES
-	VERSION 0.3.0
-	SOVERSION 0
-)
-
-add_executable(dump1090 dump1090-main.c)
-target_link_libraries(dump1090 1090)
-add_executable(faup1090 faup1090-main.c)
-target_link_libraries(faup1090 1090)
-add_executable(view1090 view1090-main.c)
-target_link_libraries(view1090 1090)
-
-INSTALL(
-    TARGETS dump1090 faup1090 view1090 1090
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-)
-
-INSTALL(
-    FILES lib1090.h
-    DESTINATION include
-)
+add_subdirectory(lib1090)
+add_subdirectory(dump1090)
