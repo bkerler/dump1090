@@ -154,6 +154,7 @@ void display_stats(struct stats *st) {
     printf("%u non-ES altitude messages from ES-equipped aircraft ignored\n", st->suppressed_altitude_messages);
     printf("%u unique aircraft tracks\n", st->unique_aircraft);
     printf("%u aircraft tracks where only one message was seen\n", st->single_message_aircraft);
+    printf("%u aircraft tracks which were not marked reliable\n", st->unreliable_aircraft);
 
     {
         uint64_t demod_cpu_millis = (uint64_t)st->demod_cpu.tv_sec*1000UL + st->demod_cpu.tv_nsec/1000000UL;
@@ -183,20 +184,20 @@ static void display_range_histogram(struct stats *st)
     int heights[RANGE_BUCKET_COUNT];
 
 #if 0
-#define NPIXELS 4
+    #define NPIXELS 4
     char *pixels[NPIXELS] = { ".", "o", "O", "|" };
 #else
     // UTF-8 bar symbols
 #define NPIXELS 8
     char *pixels[NPIXELS] = {
-        "\xE2\x96\x81",
-        "\xE2\x96\x82",
-        "\xE2\x96\x83",
-        "\xE2\x96\x84",
-        "\xE2\x96\x85",
-        "\xE2\x96\x86",
-        "\xE2\x96\x87",
-        "\xE2\x96\x88"
+            "\xE2\x96\x81",
+            "\xE2\x96\x82",
+            "\xE2\x96\x83",
+            "\xE2\x96\x84",
+            "\xE2\x96\x85",
+            "\xE2\x96\x86",
+            "\xE2\x96\x87",
+            "\xE2\x96\x88"
     };
 #endif
 
@@ -325,6 +326,7 @@ void add_stats(const struct stats *st1, const struct stats *st2, struct stats *t
     // aircraft
     target->unique_aircraft = st1->unique_aircraft + st2->unique_aircraft;
     target->single_message_aircraft = st1->single_message_aircraft + st2->single_message_aircraft;
+    target->unreliable_aircraft = st1->unreliable_aircraft + st2->unreliable_aircraft;
 
     // range histogram
     for (i = 0; i < RANGE_BUCKET_COUNT; ++i)

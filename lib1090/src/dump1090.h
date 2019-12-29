@@ -62,25 +62,25 @@
 // ============================= Include files ==========================
 
 #ifndef _WIN32
-    #include <stdio.h>
-    #include <string.h>
-    #include <stdlib.h>
-    #include <stdbool.h>
-    #include <pthread.h>
-    #include <stdint.h>
-    #include <errno.h>
-    #include <unistd.h>
-    #include <math.h>
-    #include <sys/time.h>
-    #include <signal.h>
-    #include <fcntl.h>
-    #include <ctype.h>
-    #include <sys/stat.h>
-    #include <sys/ioctl.h>
-    #include <time.h>
-    #include <limits.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <pthread.h>
+#include <stdint.h>
+#include <errno.h>
+#include <unistd.h>
+#include <math.h>
+#include <sys/time.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <ctype.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <time.h>
+#include <limits.h>
 #else
-    #include "winstubs.h" //Put everything Windows specific in here
+#include "winstubs.h" //Put everything Windows specific in here
 #endif
 
 #include "compat/compat.h"
@@ -88,12 +88,20 @@
 // ============================= #defines ===============================
 
 #define MODES_DEFAULT_FREQ         1090000000
+#define MODES_DEFAULT_WIDTH        1000
+#define MODES_DEFAULT_HEIGHT       700
+#define MODES_RTL_BUFFERS          15                         // Number of RTL buffers
 #define MODES_RTL_BUF_SIZE         (16*16384)                 // 256k
 #define MODES_MAG_BUF_SAMPLES      (MODES_RTL_BUF_SIZE / 2)   // Each sample is 2 bytes
 #define MODES_MAG_BUFFERS          12                         // Number of magnitude buffers (should be smaller than RTL_BUFFERS for flowcontrol to work)
 #define MODES_AUTO_GAIN            -100                       // Use automatic gain
 #define MODES_MAX_GAIN             999999                     // Use max available gain
+#define MODES_MSG_SQUELCH_DB       4.0                        // Minimum SNR, in dB
+#define MODES_MSG_ENCODER_ERRS     3                          // Maximum number of encoding errors
+
+#define MODEAC_MSG_SAMPLES       (25 * 2)                     // include up to the SPI bit
 #define MODEAC_MSG_BYTES          2
+#define MODEAC_MSG_SQUELCH_LEVEL  0x07FF                      // Average signal strength limit
 
 #define MODES_PREAMBLE_US        8              // microseconds = bits
 #define MODES_PREAMBLE_SAMPLES  (MODES_PREAMBLE_US       * 2)
@@ -104,8 +112,15 @@
 #define MODES_SHORT_MSG_BITS    (MODES_SHORT_MSG_BYTES   * 8)
 #define MODES_LONG_MSG_SAMPLES  (MODES_LONG_MSG_BITS     * 2)
 #define MODES_SHORT_MSG_SAMPLES (MODES_SHORT_MSG_BITS    * 2)
+#define MODES_LONG_MSG_SIZE     (MODES_LONG_MSG_SAMPLES  * sizeof(uint16_t))
+#define MODES_SHORT_MSG_SIZE    (MODES_SHORT_MSG_SAMPLES * sizeof(uint16_t))
 
 #define MODES_OS_PREAMBLE_SAMPLES  (20)
+#define MODES_OS_PREAMBLE_SIZE     (MODES_OS_PREAMBLE_SAMPLES  * sizeof(uint16_t))
+#define MODES_OS_LONG_MSG_SAMPLES  (268)
+#define MODES_OS_SHORT_MSG_SAMPLES (135)
+#define MODES_OS_LONG_MSG_SIZE     (MODES_LONG_MSG_SAMPLES  * sizeof(uint16_t))
+#define MODES_OS_SHORT_MSG_SIZE    (MODES_SHORT_MSG_SAMPLES * sizeof(uint16_t))
 
 #define MODES_OUT_BUF_SIZE         (1500)
 #define MODES_OUT_FLUSH_SIZE       (MODES_OUT_BUF_SIZE - 256)
@@ -123,6 +138,7 @@ typedef enum {
     SOURCE_MODE_S,         /* data from a Mode S message, no full CRC */
     SOURCE_MODE_S_CHECKED, /* data from a Mode S message with full CRC */
     SOURCE_TISB,           /* data from a TIS-B extended squitter message */
+    SOURCE_ADSR,           /* data from a ADS-R extended squitter message */
     SOURCE_ADSB,           /* data from a ADS-B extended squitter message */
 } datasource_t;
 
@@ -246,6 +262,7 @@ typedef enum {
 #define MODES_NOTUSED(V) ((void) V)
 
 #define MAX_AMPLITUDE 65535.0
+#define MAX_POWER (MAX_AMPLITUDE * MAX_AMPLITUDE)
 
 // Include subheaders after all the #defines are in place
 
@@ -263,7 +280,7 @@ typedef enum {
 //======================== structure declarations =========================
 
 typedef enum {
-    SDR_NONE, SDR_IFILE, SDR_RTLSDR, SDR_BLADERF, SDR_LIMESDR, SDR_SOAPYSDR, SDR_HACKRF
+    SDR_NONE, SDR_IFILE, SDR_RTLSDR, SDR_BLADERF, SDR_SOAPYSDR, SDR_LIMESDR, SDR_HACKRF
 } sdr_type_t;
 
 // Structure representing one magnitude buffer
@@ -308,10 +325,14 @@ struct modes_t {                             // Internal state
     struct net_service *services;    // Active services
     struct client *clients;          // Our clients
 
-    struct net_writer raw_out;       // Raw output
-    struct net_writer beast_out;     // Beast-format output
-    struct net_writer sbs_out;       // SBS-format output
-    struct net_writer fatsv_out;     // FATSV-format output
+    struct net_service *beast_verbatim_service;  // Beast-format output service, verbatim mode
+    struct net_service *beast_cooked_service;    // Beast-format output service, "cooked" mode
+
+    struct net_writer raw_out;                   // AVR-format output
+    struct net_writer beast_verbatim_out;        // Beast-format output, verbatim mode
+    struct net_writer beast_cooked_out;          // Beast-format output, "cooked" mode
+    struct net_writer sbs_out;                   // SBS-format output
+    struct net_writer fatsv_out;                 // FATSV-format output
 
 #ifdef _WIN32
     WSADATA        wsaData;          // Windows socket initialisation
@@ -337,7 +358,7 @@ struct modes_t {                             // Internal state
     char *net_output_beast_ports;    // List of Beast output TCP ports
     char *net_bind_address;          // Bind address
     int   net_sndbuf_size;           // TCP output buffer size (64Kb * 2^n)
-    int   net_verbatim;              // if true, send the original message, not the CRC-corrected one
+    int   net_verbatim;              // if true, Beast output connections default to verbatim mode
     int   forward_mlat;              // allow forwarding of mlat messages to output ports
     int   quiet;                     // Suppress stdout
     uint32_t show_only;              // Only show messages from this ICAO
@@ -396,6 +417,7 @@ struct modesMessage {
     int           remote;                         // If set this message is from a remote station
     double        signalLevel;                    // RSSI, in the range [0..1], as a fraction of full-scale power
     int           score;                          // Scoring from scoreModesMessage, if used
+    int           reliable;                       // is this a "reliable" message (uncorrected DF11/DF17/DF18)?
 
     datasource_t  source;                         // Characterizes the overall message source
 
@@ -604,6 +626,7 @@ unsigned modeCToModeA (int modeC);
 void  interactiveInit(void);
 void  interactiveShowData(void);
 void  interactiveCleanup(void);
+void  interactiveNoConnection(void);
 
 void log_with_timestamp(const char *format, ...) __attribute__((format (printf, 1, 2) ));
 

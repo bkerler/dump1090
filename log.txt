@@ -1,0 +1,3147 @@
+*8c1de75457d2b7347480695efe9d;
+CRC: d8ee00
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 1042085.67us
+DF:17 AA:1DE754 CA:4 ME:57D2B734748069
+ Extended Squitter Airborne position (barometric altitude) (10)
+  ICAO Address:  1DE754 (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (105018)
+  CPR longitude: (32873)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*95360f2aaaaea8edd528b95410c2;
+CRC: 9e31a9
+No. of bit errors fixed: 2
+RSSI: -44.2 dBFS
+Score: 466
+Time: 1322374.08us
+DF:18 AA:360F2A CF:5 ME:AAAEA8EDD528B9
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  Other Address: 360F2A (TIS-B, other addressing scheme)
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (30442)
+  CPR longitude: (75961)
+  CPR decoding:  none
+  NIC-B:         0
+
+*8f0a23674d4b22f03d80e40ea3c9;
+CRC: 58494e
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 1354385.33us
+DF:17 AA:0A2367 CA:7 ME:4D4B22F03D80E4
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  0A2367 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 13850 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (96286)
+  CPR longitude: (98532)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8d7e21292e6aeacba939bbac8d49;
+CRC: b476d9
+No. of bit errors fixed: 2
+RSSI: -42.9 dBFS
+Score: 466
+Time: 1449429.92us
+DF:17 AA:7E2129 CA:5 ME:2E6AEACBA939BB
+ Extended Squitter Surface position (5)
+  ICAO Address:  7E2129 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Track/Heading  129.4
+  Groundspeed:   87.0 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (91604)
+  CPR longitude: (80315)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8d7d6534b08d873950321553d9e6;
+CRC: 000090
+No. of bit errors fixed: 2
+RSSI: -44.3 dBFS
+Score: 466
+Time: 2374204.50us
+DF:17 AA:7D6534 CA:5 ME:B08D8739503215
+ Extended Squitter Airborne position (geometric altitude) (22)
+  ICAO Address:  7D6534 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Geom altitude: 27200 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (105640)
+  CPR longitude: (12821)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*8af366fb61a2fcbf042c40f5265d;
+CRC: 010800
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 3644076.42us
+DF:17 AA:F366FB CA:2 ME:61A2FCBF042C40
+ Extended Squitter Airborne position (barometric altitude) (12)
+  ICAO Address:  F366FB (Mode S / ADS-B)
+  Baro altitude: 65400 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (24450)
+  CPR longitude: (11328)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          7
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*921bdd4f5185cbeb59632e441663;
+CRC: e0a1c6
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 4666678.42us
+DF:18 AA:1BDD4F CF:2 ME:5185CBEB59632E
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  Other Address: 1BDD4F (TIS-B, Mode A code and track file number)
+  Baro altitude: 25700 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (128428)
+  CPR longitude: (90926)
+  CPR decoding:  none
+
+*8b7e6bb3cb653d40598da7907e93;
+CRC: e1d800
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 4916553.33us
+DF:17 AA:7E6BB3 CA:3 ME:CB653D40598DA7
+ Extended Squitter Unknown (25/0)
+  ICAO Address:  7E6BB3 (Mode S / ADS-B)
+
+*94ee55e35602bc2a96b25562484b;
+CRC: 1f11ce
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 5832786.25us
+DF:18 AA:EE55E3 CF:4 ME:5602BC2A96B255
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  Other Address: EE55E3 (unknown addressing scheme)
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*969e9757154d922d7a928cce0f75;
+CRC: d7faa6
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 7965311.92us
+DF:18 AA:9E9757 CF:6 ME:154D922D7A928C
+ Extended Squitter (Non-Transponder) Aircraft identification and category (2)
+  ICAO Address:  9E9757 (ADS-R)
+  Category:      C5
+
+*92dd15daf22e9029c5af724f4934;
+CRC: a530a5
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 7987417.42us
+DF:18 AA:DD15DA CF:2 ME:F22E9029C5AF72
+ Extended Squitter (Non-Transponder) Aircraft Operational Coordination (30/0)
+  ICAO Address:  DD15DA (TIS-B)
+
+*8c2ebe0d4be5a86aaf71d36cc9bf;
+CRC: 57daa6
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 8936142.33us
+DF:17 AA:2EBE0D CA:4 ME:4BE5A86AAF71D3
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  2EBE0D (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (13655)
+  CPR longitude: (94675)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*96956c076ab77d5d4c16dbb044fd;
+CRC: 2bfd53
+No. of bit errors fixed: 1
+RSSI: -44.0 dBFS
+Score: 700
+Time: 8992330.50us
+DF:18 AA:956C07 CF:6 ME:6AB77D5D4C16DB
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (13)
+  ICAO Address:  956C07 (ADS-R)
+  Baro altitude: 35575 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (44710)
+  CPR longitude: (5851)
+  CPR decoding:  none
+  NACp:          6
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8ec5644906c3e8b4c2bf535648d7;
+CRC: e0a86c
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 9665071.83us
+DF:17 AA:C56449 CA:6 ME:06C3E8B4C2BF53
+ Extended Squitter No position information (airborne or surface) (0)
+  ICAO Address:  C56449 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 38150 ft
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*91fa49965775a31e7d74e52f507d;
+CRC: 001400
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 9964300.83us
+DF:18 AA:FA4996 CF:1 ME:5775A31E7D74E5
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  Other Address: FA4996 (ADS-B, other addressing scheme)
+  Baro altitude: 22450 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (102206)
+  CPR longitude: (95461)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8cf601b763e0755457b46a25efa9;
+CRC: 0d9441
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 10548153.75us
+DF:17 AA:F601B7 CA:4 ME:63E0755457B46A
+ Extended Squitter Airborne position (barometric altitude) (12)
+  ICAO Address:  F601B7 (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (43563)
+  CPR longitude: (111722)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          7
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9489ce8f9a1af36395c4a2e04869;
+CRC: 15b825
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 11978925.67us
+DF:18 AA:89CE8F CF:4 ME:9A1AF36395C4A2
+ Extended Squitter (Non-Transponder) Unknown (19/0)
+  Other Address: 89CE8F (unknown addressing scheme)
+
+*897ba493229753044206f67345f3;
+CRC: 283600
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 12263869.75us
+DF:17 AA:7BA493 CA:1 ME:229753044206F6
+ Extended Squitter Aircraft identification and category (4)
+  ICAO Address:  7BA493 (Mode S / ADS-B)
+  Category:      A2
+
+*968c2172e248b7abac15d492f4c2;
+CRC: 6159c0
+No. of bit errors fixed: 1
+RSSI: -42.8 dBFS
+Score: 700
+Time: 12792119.25us
+DF:18 AA:8C2172 CF:6 ME:E248B7ABAC15D4
+ Extended Squitter (Non-Transponder) ACAS RA broadcast (28/2)
+  ICAO Address:  8C2172 (ADS-R)
+
+*8ad54e334a52e2cb0718d58d7720;
+CRC: b59718
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 12965695.33us
+DF:17 AA:D54E33 CA:2 ME:4A52E2CB0718D5
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  D54E33 (Mode S / ADS-B)
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (91523)
+  CPR longitude: (71893)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8d4ad8af44e71baf66ce1d13959e;
+CRC: 5608c4
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 13009206.83us
+DF:17 AA:4AD8AF CA:5 ME:44E71BAF66CE1D
+ Extended Squitter Surface position (8)
+  ICAO Address:  4AD8AF (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   54.5 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (120755)
+  CPR longitude: (52765)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*96edcc0e87e9e7d34d08a9f5b592;
+CRC: 690bc7
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 13082115.33us
+DF:18 AA:EDCC0E CF:6 ME:87E9E7D34D08A9
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (16)
+  Other Address: EDCC0E (ADS-R, other addressing scheme)
+  Baro altitude: 45750 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (125350)
+  CPR longitude: (67753)
+  CPR decoding:  none
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8b789d8d9b2e37c322edad3cbff1;
+CRC: bfd530
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 13487306.17us
+DF:17 AA:789D8D CA:3 ME:9B2E37C322EDAD
+ Extended Squitter Airspeed and heading, subsonic (19/3)
+  ICAO Address:  789D8D (Mode S / ADS-B)
+  Geom - baro:   -1100 ft
+  Heading        199.3
+  TAS:           536 kt
+  Geom rate:     11904 ft/min
+  NACv:          5
+
+*93d45f4ab534437cee58f261c88c;
+CRC: a3d22b
+No. of bit errors fixed: 2
+RSSI: -43.0 dBFS
+Score: 466
+Time: 14420599.67us
+DF:18 AA:D45F4A CF:3 ME:B534437CEE58F2
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (22)
+  Other Address: D45F4A (TIS-B, Mode A code and track file number)
+
+*948de621a91d6c5133709d73d019;
+CRC: 587158
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 14619740.67us
+DF:18 AA:8DE621 CF:4 ME:A91D6C5133709D
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  Other Address: 8DE621 (unknown addressing scheme)
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*88cc946f9c789fd42067117ccaee;
+CRC: 45441f
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 14683987.67us
+DF:17 AA:CC946F CA:0 ME:9C789FD4206711
+ Extended Squitter Airspeed and heading, supersonic (19/4)
+  ICAO Address:  CC946F (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Geom - baro:   400 ft
+  TAS:           2688 kt
+  Geom rate:     1536 ft/min
+  NACv:          7
+
+*90d85b54d7d4fb3a2ed11a48a02d;
+CRC: 0790fb
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 15593347.33us
+DF:18 AA:D85B54 CF:0 ME:D7D4FB3A2ED11A
+ Extended Squitter (Non-Transponder) Unknown (26/0)
+  ICAO Address:  D85B54 (ADS-B, non-transponder)
+
+*925345d22e7cf947b379502b65a4;
+CRC: 0ce412
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 15884827.33us
+DF:18 AA:5345D2 CF:2 ME:2E7CF947B37950
+ Extended Squitter (Non-Transponder) Surface position (5)
+  Other Address: 5345D2 (TIS-B, Mode A code and track file number)
+  Air/Ground:    ground
+  Track/Heading  222.2
+  Groundspeed:   89.0 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (41945)
+  CPR longitude: (96592)
+  CPR decoding:  none
+
+*8cd6d6c3753467d591ada8ea49c5;
+CRC: 100100
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 15906480.42us
+DF:17 AA:D6D6C3 CA:4 ME:753467D591ADA8
+ Extended Squitter Airborne position (barometric altitude) (14)
+  ICAO Address:  D6D6C3 (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (125640)
+  CPR longitude: (109992)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8ac62a2a94458adf892505e4491d;
+CRC: 080001
+No. of bit errors fixed: 2
+RSSI: -44.3 dBFS
+Score: 466
+Time: 16089947.00us
+DF:17 AA:C62A2A CA:2 ME:94458ADF892505
+ Extended Squitter Airborne position (barometric altitude) (18)
+  ICAO Address:  C62A2A (Mode S / ADS-B)
+  Baro altitude: 12800 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (94148)
+  CPR longitude: (75013)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*9493bc2d33888c10a3908a16e193;
+CRC: ea24ad
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 16704871.25us
+DF:18 AA:93BC2D CF:4 ME:33888C10A3908A
+ Extended Squitter (Non-Transponder) Surface position (6)
+  Other Address: 93BC2D (unknown addressing scheme)
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*92a564fbcf49dbabde3338544abd;
+CRC: 1ad8d3
+No. of bit errors fixed: 2
+RSSI: -44.3 dBFS
+Score: 466
+Time: 16781341.50us
+DF:18 AA:A564FB CF:2 ME:CF49DBABDE3338
+ Extended Squitter (Non-Transponder) Unknown (25/0)
+  ICAO Address:  A564FB (TIS-B)
+
+*8c98924cba395587028131640725;
+CRC: de31e9
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 17203462.58us
+DF:17 AA:98924C CA:4 ME:BA395587028131
+ Extended Squitter Unknown (23/2)
+  ICAO Address:  98924C (Mode S / ADS-B)
+  Air/Ground:    ground
+
+*8ab5c503cb3918fe6e7da14e7b56;
+CRC: afe54c
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 18121340.83us
+DF:17 AA:B5C503 CA:2 ME:CB3918FE6E7DA1
+ Extended Squitter Unknown (25/0)
+  ICAO Address:  B5C503 (Mode S / ADS-B)
+
+*96f36edce805badd72be576f83b5;
+CRC: 7a9319
+No. of bit errors fixed: 2
+RSSI: -43.0 dBFS
+Score: 466
+Time: 18180601.00us
+DF:18 AA:F36EDC CF:6 ME:E805BADD72BE57
+ Extended Squitter (Non-Transponder) Target state and status (V1) (29/0)
+  ICAO Address:  F36EDC (ADS-R)
+  NIC-baro:      1
+  NACp:          5
+  SIL:           3 (p <= 0.00001%, unknown type)
+  Selected heading:        471.0
+  Nav modes:               autopilot tcas
+  Emergency/priority:      reserved
+
+*9769438d0e24d55890babe82cb5e;
+CRC: afcd7a
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 20029805.08us
+DF:18 AA:69438D CF:7 ME:0E24D55890BABE
+ Extended Squitter (Non-Transponder) Aircraft identification and category (1)
+  Other Address: 69438D (unknown addressing scheme)
+
+*90aab618752ac084a266b6529524;
+CRC: 00485a
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 22711992.67us
+DF:18 AA:AAB618 CF:0 ME:752AC084A266B6
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (14)
+  ICAO Address:  AAB618 (ADS-B, non-transponder)
+  Baro altitude: 124600 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (16977)
+  CPR longitude: (26294)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8ad4868a8ec1aa9a112776a5606b;
+CRC: 182be2
+No. of bit errors fixed: 2
+RSSI: -42.9 dBFS
+Score: 466
+Time: 23440528.42us
+DF:17 AA:D4868A CA:2 ME:8EC1AA9A112776
+ Extended Squitter Airborne position (barometric altitude) (17)
+  ICAO Address:  D4868A (Mode S / ADS-B)
+  Baro altitude: 37650 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (85256)
+  CPR longitude: (75638)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8b1892ed40822ec68da83aaa27ce;
+CRC: cab380
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 24337651.58us
+DF:17 AA:1892ED CA:3 ME:40822EC68DA83A
+ Extended Squitter Surface position (8)
+  ICAO Address:  1892ED (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   0.9 kt (v2: 0.9 kt)
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (90950)
+  CPR longitude: (108602)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*95d597bce82abee7fd16fcc3703d;
+CRC: 4aa493
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 25227741.50us
+DF:18 AA:D597BC CF:5 ME:E82ABEE7FD16FC
+ Extended Squitter (Non-Transponder) Target state and status (V1) (29/0)
+  Other Address: D597BC (TIS-B, other addressing scheme)
+
+*948c48ccc91dee60745034239f21;
+CRC: 185770
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 25366554.33us
+DF:18 AA:8C48CC CF:4 ME:C91DEE60745034
+ Extended Squitter (Non-Transponder) Unknown (25/0)
+  Other Address: 8C48CC (unknown addressing scheme)
+
+*904e4518524faff55da8021197ea;
+CRC: 383400
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 26342088.67us
+DF:18 AA:4E4518 CF:0 ME:524FAFF55DA802
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  ICAO Address:  4E4518 (ADS-B, non-transponder)
+  Baro altitude: 14850 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (129710)
+  CPR longitude: (108546)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9497c6769027339f1129f9ab81f2;
+CRC: dc66ec
+No. of bit errors fixed: 2
+RSSI: -44.2 dBFS
+Score: 466
+Time: 27357426.33us
+DF:18 AA:97C676 CF:4 ME:9027339F1129F9
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (18)
+  Other Address: 97C676 (unknown addressing scheme)
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*92adde95ac0914345764f5209f4d;
+CRC: 0dd441
+No. of bit errors fixed: 1
+RSSI: -44.1 dBFS
+Score: 700
+Time: 27855768.67us
+DF:18 AA:ADDE95 CF:2 ME:AC0914345764F5
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  ICAO Address:  ADDE95 (TIS-B)
+  Geom altitude: 625 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (6699)
+  CPR longitude: (91381)
+  CPR decoding:  none
+
+*94481995983acab81df9cb1d2753;
+CRC: 5c1b00
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 29463990.25us
+DF:18 AA:481995 CF:4 ME:983ACAB81DF9CB
+ Extended Squitter (Non-Transponder) Unknown (19/0)
+  Other Address: 481995 (unknown addressing scheme)
+
+*8a8d8bd2ae71c06bb38e7786f0c2;
+CRC: 903c69
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 33318702.83us
+DF:17 AA:8D8BD2 CA:2 ME:AE71C06BB38E77
+ Extended Squitter Airborne position (geometric altitude) (21)
+  ICAO Address:  8D8BD2 (Mode S / ADS-B)
+  Geom altitude: 21700 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (13785)
+  CPR longitude: (102007)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8f87ca404b0c2d2092734c80a61a;
+CRC: adc368
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 35182221.92us
+DF:17 AA:87CA40 CA:7 ME:4B0C2D2092734C
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  87CA40 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 5800 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (36937)
+  CPR longitude: (29516)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*91c1bc6d72c3c90b5e91ede62bf3;
+CRC: c2b381
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 35455482.92us
+DF:18 AA:C1BC6D CF:1 ME:72C3C90B5E91ED
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (14)
+  Other Address: C1BC6D (ADS-B, other addressing scheme)
+  Baro altitude: 38100 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (34223)
+  CPR longitude: (37357)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8c41a953532cfc5b78ea42ba5ef6;
+CRC: 030ace
+No. of bit errors fixed: 1
+RSSI: -44.1 dBFS
+Score: 700
+Time: 37843319.25us
+DF:17 AA:41A953 CA:4 ME:532CFC5B78EA42
+ Extended Squitter Airborne position (barometric altitude) (10)
+  ICAO Address:  41A953 (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (11708)
+  CPR longitude: (59970)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8d10372fc16650a528495202c8d7;
+CRC: dc7af7
+No. of bit errors fixed: 1
+RSSI: -43.8 dBFS
+Score: 700
+Time: 37876809.50us
+DF:17 AA:10372F CA:5 ME:C16650A5284952
+ Extended Squitter Reserved for surface system status (24/0)
+  ICAO Address:  10372F (Mode S / ADS-B)
+  Air/Ground:    airborne
+
+*8d903c499a8f7cd1cb856b719eb9;
+CRC: 2bf953
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 37882855.50us
+DF:17 AA:903C49 CA:5 ME:9A8F7CD1CB856B
+ Extended Squitter Airborne velocity over ground, supersonic (19/2)
+  ICAO Address:  903C49 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Geom - baro:   2650 ft
+  Ground track   233.8
+  Groundspeed:   4418.7 kt
+  Geom rate:     -14336 ft/min
+  NACv:          1
+
+*90a24d14a18c2c6c36f25213d0d2;
+CRC: 09f738
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 38478816.83us
+DF:18 AA:A24D14 CF:0 ME:A18C2C6C36F252
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (20)
+  ICAO Address:  A24D14 (ADS-B, non-transponder)
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (13851)
+  CPR longitude: (62034)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9549416df6a8555278dcfab27873;
+CRC: 1ba883
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 40840483.25us
+DF:18 AA:49416D CF:5 ME:F6A8555278DCFA
+ Extended Squitter (Non-Transponder) Aircraft Operational Coordination (30/0)
+  Other Address: 49416D (TIS-B, other addressing scheme)
+
+*97e4e653b75d74c40811314bce85;
+CRC: 010200
+No. of bit errors fixed: 2
+RSSI: -42.8 dBFS
+Score: 466
+Time: 40943058.92us
+DF:18 AA:E4E653 CF:7 ME:B75D74C4081131
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (22)
+  Other Address: E4E653 (unknown addressing scheme)
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*92893812296d9c18fbc5c6931e77;
+CRC: 88982f
+No. of bit errors fixed: 2
+RSSI: -42.7 dBFS
+Score: 466
+Time: 42231840.33us
+DF:18 AA:893812 CF:2 ME:296D9C18FBC5C6
+ Extended Squitter (Non-Transponder) Surface position (5)
+  Other Address: 893812 (TIS-B, Mode A code and track file number)
+  Air/Ground:    ground
+  Track/Heading  250.3
+  Groundspeed:   6.8 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (3197)
+  CPR longitude: (116166)
+  CPR decoding:  none
+
+*8b729ee977032087724394a361a0;
+CRC: 8e7a08
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 43964325.33us
+DF:17 AA:729EE9 CA:3 ME:77032087724394
+ Extended Squitter Airborne position (barometric altitude) (14)
+  ICAO Address:  729EE9 (Mode S / ADS-B)
+  Baro altitude: -550 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (17337)
+  CPR longitude: (17300)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*967c5c2db2a4c03ee6e12eb37e2a;
+CRC: 03ea16
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 44163384.33us
+DF:18 AA:7C5C2D CF:6 ME:B2A4C03EE6E12E
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (22)
+  ICAO Address:  7C5C2D (ADS-R)
+  Geom altitude: 120400 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (8051)
+  CPR longitude: (57646)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*8eb961b656b678814de415ba2a0e;
+CRC: 000120
+No. of bit errors fixed: 2
+RSSI: -42.6 dBFS
+Score: 466
+Time: 45010597.00us
+DF:17 AA:B961B6 CA:6 ME:56B678814DE415
+ Extended Squitter Airborne position (barometric altitude) (10)
+  ICAO Address:  B961B6 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 74100 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (16550)
+  CPR longitude: (123925)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8e7a86e9e04590753a8cc84d671f;
+CRC: 4e7274
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 45306057.33us
+DF:17 AA:7A86E9 CA:6 ME:E04590753A8CC8
+ Extended Squitter Unknown (28/0)
+  ICAO Address:  7A86E9 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*8ea2db11f2736b9ee0ef33526eab;
+CRC: 6ef397
+No. of bit errors fixed: 2
+RSSI: -44.3 dBFS
+Score: 466
+Time: 46356547.75us
+DF:17 AA:A2DB11 CA:6 ME:F2736B9EE0EF33
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  A2DB11 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*95a7934e1f72fc676f6466688a41;
+CRC: 4701ef
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 46433490.83us
+DF:18 AA:A7934E CF:5 ME:1F72FC676F6466
+ Extended Squitter (Non-Transponder) Aircraft identification and category (3)
+  Other Address: A7934E (TIS-B, other addressing scheme)
+  Category:      B7
+
+*8f257d4b73bdb2e45d74244c7928;
+CRC: 2ae6c3
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 47917620.08us
+DF:17 AA:257D4B CA:7 ME:73BDB2E45D7424
+ Extended Squitter Airborne position (barometric altitude) (14)
+  ICAO Address:  257D4B (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 36875 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (94766)
+  CPR longitude: (95268)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9641965adbfffc575be845959282;
+CRC: 032ace
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 47924287.58us
+DF:18 AA:41965A CF:6 ME:DBFFFC575BE845
+ Extended Squitter (Non-Transponder) Reserved for trajectory change (27/0)
+  ICAO Address:  41965A (ADS-R)
+
+*97a784dd43b15947c3d2e0b747f3;
+CRC: 6ea218
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 51472170.67us
+DF:18 AA:A784DD CF:7 ME:43B15947C3D2E0
+ Extended Squitter (Non-Transponder) Surface position (8)
+  Other Address: A784DD (unknown addressing scheme)
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8909ada0d8433f8145ed73c11e7d;
+CRC: 88665f
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 51966363.42us
+DF:17 AA:09ADA0 CA:1 ME:D8433F8145ED73
+ Extended Squitter Reserved for trajectory change (27/0)
+  ICAO Address:  09ADA0 (Mode S / ADS-B)
+
+*96ef6a5e7a8c49e9f2e7dd5a8e7c;
+CRC: de90eb
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 53066124.17us
+DF:18 AA:EF6A5E CF:6 ME:7A8C49E9F2E7DD
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (15)
+  ICAO Address:  EF6A5E (ADS-R)
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (62713)
+  CPR longitude: (59357)
+  CPR decoding:  none
+  NACp:          4
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*93a682baa31913e1675a17437a63;
+CRC: 2cf986
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 53695870.42us
+DF:18 AA:A682BA CF:3 ME:A31913E1675A17
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (20)
+  Other Address: A682BA (TIS-B, Mode A code and track file number)
+
+*8f9247df06aaa42ef017823895b0;
+CRC: ebc51d
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 53880767.75us
+DF:17 AA:9247DF CA:7 ME:06AAA42EF01782
+ Extended Squitter No position information (airborne or surface) (0)
+  ICAO Address:  9247DF (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*934cd0d6af3be57b1e736982faff;
+CRC: e3f3d5
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 54339559.83us
+DF:18 AA:4CD0D6 CF:3 ME:AF3BE57B1E7369
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  Other Address: 4CD0D6 (TIS-B, Mode A code and track file number)
+
+*90d5013c5aac7aaf78c22ca37a42;
+CRC: 30d8d8
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 54754870.33us
+DF:18 AA:D5013C CF:0 ME:5AAC7AAF78C22C
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (11)
+  ICAO Address:  D5013C (ADS-B, non-transponder)
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (87996)
+  CPR longitude: (49708)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*959a45d40fbff8318102c72615ca;
+CRC: 840b8f
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 55101096.67us
+DF:18 AA:9A45D4 CF:5 ME:0FBFF8318102C7
+ Extended Squitter (Non-Transponder) Aircraft identification and category (1)
+  Other Address: 9A45D4 (TIS-B, other addressing scheme)
+  Category:      D7
+
+*937bae0ad117e560d68a66dcd6a6;
+CRC: 018577
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 1047529.08us
+DF:18 AA:7BAE0A CF:3 ME:D117E560D68A66
+ Extended Squitter (Non-Transponder) Unknown (26/0)
+  Other Address: 7BAE0A (TIS-B, Mode A code and track file number)
+
+*9328d16bafb0dfb33d32d13ea3cd;
+CRC: 07fde4
+No. of bit errors fixed: 2
+RSSI: -42.3 dBFS
+Score: 466
+Time: 2113728.75us
+DF:18 AA:28D16B CF:3 ME:AFB0DFB33D32D1
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  Other Address: 28D16B (TIS-B, Mode A code and track file number)
+
+*91700f332ccf1442ecfe5d3a156b;
+CRC: 73a526
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 2404804.58us
+DF:18 AA:700F33 CF:1 ME:2CCF1442ECFE5D
+ Extended Squitter (Non-Transponder) Surface position (5)
+  Other Address: 700F33 (ADS-B, other addressing scheme)
+  Air/Ground:    ground
+  Track/Heading  317.8
+  Groundspeed:   52.5 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (8566)
+  CPR longitude: (65117)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8bd256cbf0123069c36e235d2064;
+CRC: 0b0ace
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 2509796.25us
+DF:17 AA:D256CB CA:3 ME:F0123069C36E23
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  D256CB (Mode S / ADS-B)
+
+*9084ac75ba12171d0ff1132dac1d;
+CRC: 2cb7e0
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 3330627.50us
+DF:18 AA:84AC75 CF:0 ME:BA12171D0FF113
+ Extended Squitter (Non-Transponder) Unknown (23/2)
+  ICAO Address:  84AC75 (ADS-B, non-transponder)
+
+*8a4734b33c4888a7beccc1b2309d;
+CRC: e3134d
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 3846302.50us
+DF:17 AA:4734B3 CA:2 ME:3C4888A7BECCC1
+ Extended Squitter Surface position (7)
+  ICAO Address:  4734B3 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Track/Heading  22.5
+  Groundspeed:   44.5 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (21471)
+  CPR longitude: (52417)
+  CPR decoding:  none
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*90611af172a28e6be0b75ecb4045;
+CRC: fa3bce
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 4226003.83us
+DF:18 AA:611AF1 CF:0 ME:72A28E6BE0B75E
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (14)
+  ICAO Address:  611AF1 (ADS-B, non-transponder)
+  Baro altitude: 1100 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (79344)
+  CPR longitude: (46942)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8a18d3e1eeb8f096c8296d5da3b4;
+CRC: 1c9b00
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 4776824.00us
+DF:17 AA:18D3E1 CA:2 ME:EEB8F096C8296D
+ Extended Squitter Unknown (29/3)
+  ICAO Address:  18D3E1 (Mode S / ADS-B)
+
+*9273b34acf50c913a73668688f23;
+CRC: 13adb1
+No. of bit errors fixed: 2
+RSSI: -43.0 dBFS
+Score: 466
+Time: 5117216.92us
+DF:18 AA:73B34A CF:2 ME:CF50C913A73668
+ Extended Squitter (Non-Transponder) Unknown (25/0)
+  ICAO Address:  73B34A (TIS-B)
+
+*916e9be05562832693cf5aa50ac4;
+CRC: dd4c10
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 5665022.17us
+DF:18 AA:6E9BE0 CF:1 ME:5562832693CF5A
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  Other Address: 6E9BE0 (ADS-B, other addressing scheme)
+  Baro altitude: 28500 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (103241)
+  CPR longitude: (118618)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*90eb358edeecba21a3bb549e19a1;
+CRC: 8e03ca
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 5728759.50us
+DF:18 AA:EB358E CF:0 ME:DEECBA21A3BB54
+ Extended Squitter (Non-Transponder) Reserved for trajectory change (27/0)
+  ICAO Address:  EB358E (ADS-B, non-transponder)
+
+*8d421e1844f33a95c652e8155252;
+CRC: 000480
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 7482965.42us
+DF:17 AA:421E18 CA:5 ME:44F33A95C652E8
+ Extended Squitter Surface position (8)
+  ICAO Address:  421E18 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   55.5 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (84707)
+  CPR longitude: (21224)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*964481f4da93159c30533766ec2a;
+CRC: 1f743b
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 7899582.00us
+DF:18 AA:4481F4 CF:6 ME:DA93159C305337
+ Extended Squitter (Non-Transponder) Reserved for trajectory change (27/0)
+  ICAO Address:  4481F4 (ADS-R)
+
+*8d43a4a19691c51afcda0c2d1ea0;
+CRC: 7b8ed2
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 8095882.33us
+DF:17 AA:43A4A1 CA:5 ME:9691C51AFCDA0C
+ Extended Squitter Airborne position (barometric altitude) (18)
+  ICAO Address:  43A4A1 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Baro altitude: 28100 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (36222)
+  CPR longitude: (55820)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*936ea12328ac66e5c7b06f36b28b;
+CRC: 503af0
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 9440561.83us
+DF:18 AA:6EA123 CF:3 ME:28AC66E5C7B06F
+ Extended Squitter (Non-Transponder) Surface position (5)
+  ICAO Address:  6EA123 (TIS-B)
+
+*8bbec472c96340f86559c9b2d7c8;
+CRC: 020001
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 9994361.92us
+DF:17 AA:BEC472 CA:3 ME:C96340F86559C9
+ Extended Squitter Unknown (25/0)
+  ICAO Address:  BEC472 (Mode S / ADS-B)
+
+*97a9cb5246ca1869507e3527509a;
+CRC: c7c209
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 10299815.92us
+DF:18 AA:A9CB52 CF:7 ME:46CA1869507E35
+ Extended Squitter (Non-Transponder) Surface position (8)
+  Other Address: A9CB52 (unknown addressing scheme)
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*937093a27644a6cfaed1f26aed13;
+CRC: aeea82
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 11008593.25us
+DF:18 AA:7093A2 CF:3 ME:7644A6CFAED1F2
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (14)
+  ICAO Address:  7093A2 (TIS-B)
+
+*8d7162e0d9bac3f503cd3e45a741;
+CRC: 001e1b
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 11093966.42us
+DF:17 AA:7162E0 CA:5 ME:D9BAC3F503CD3E
+ Extended Squitter Reserved for trajectory change (27/0)
+  ICAO Address:  7162E0 (Mode S / ADS-B)
+  Air/Ground:    airborne
+
+*970d319513601134836290d9874e;
+CRC: 706c08
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 12302944.17us
+DF:18 AA:0D3195 CF:7 ME:13601134836290
+ Extended Squitter (Non-Transponder) Aircraft identification and category (2)
+  Other Address: 0D3195 (unknown addressing scheme)
+
+*96316accae70bed429d0ea8a2a30;
+CRC: f53b1c
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 12683778.33us
+DF:18 AA:316ACC CF:6 ME:AE70BED429D0EA
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  ICAO Address:  316ACC (ADS-R)
+  Geom altitude: 45500 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (92692)
+  CPR longitude: (119018)
+  CPR decoding:  none
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8df36b77953d3862db2b79d09e1c;
+CRC: 105670
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 13528417.17us
+DF:17 AA:F36B77 CA:5 ME:953D3862DB2B79
+ Extended Squitter Airborne position (barometric altitude) (18)
+  ICAO Address:  F36B77 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Baro altitude: 11075 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (12653)
+  CPR longitude: (76665)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*97aadbaa5b824596ae14919262ad;
+CRC: 046848
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 14933917.58us
+DF:18 AA:AADBAA CF:7 ME:5B824596AE1491
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (11)
+  Other Address: AADBAA (unknown addressing scheme)
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9229cd24943648ebda245da20a29;
+CRC: 8afa52
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 14965135.50us
+DF:18 AA:29CD24 CF:2 ME:943648EBDA245D
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (18)
+  ICAO Address:  29CD24 (TIS-B)
+  Baro altitude: 115000 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (30189)
+  CPR longitude: (9309)
+  CPR decoding:  none
+
+*88f9ad5619d3497e1997206fa228;
+CRC: 1ccb22
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 15391364.17us
+DF:17 AA:F9AD56 CA:0 ME:19D3497E199720
+ Extended Squitter Aircraft identification and category (3)
+  ICAO Address:  F9AD56 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Category:      B1
+
+*8d71a348f99256abfc603d69e948;
+CRC: f26592
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 15727645.50us
+DF:17 AA:71A348 CA:5 ME:F99256ABFC603D
+ Extended Squitter Aircraft operational status (surface) (31/1)
+  ICAO Address:  71A348 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Aircraft Operational Status:
+    Version:            3
+    Capability classes: 
+    Operational modes:  
+    Track/heading:      unknown heading type
+    Heading ref dir:    unknown heading type
+
+*8981cbee890039a839603570f2de;
+CRC: 75aa3b
+No. of bit errors fixed: 2
+RSSI: -44.3 dBFS
+Score: 466
+Time: 15974358.08us
+DF:17 AA:81CBEE CA:1 ME:890039A8396035
+ Extended Squitter Airborne position (barometric altitude) (17)
+  ICAO Address:  81CBEE (Mode S / ADS-B)
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (54300)
+  CPR longitude: (90165)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8de417e714baf4b51d03dfe0831d;
+CRC: e45c8b
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 17264227.25us
+DF:17 AA:E417E7 CA:5 ME:14BAF4B51D03DF
+ Extended Squitter Aircraft identification and category (2)
+  ICAO Address:  E417E7 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Category:      C4
+
+*8a6702b4d389f4550d62acea2ce8;
+CRC: 800002
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 17962022.92us
+DF:17 AA:6702B4 CA:2 ME:D389F4550D62AC
+ Extended Squitter Unknown (26/0)
+  ICAO Address:  6702B4 (Mode S / ADS-B)
+
+*8d6d7fc34d18226bc6625e84662a;
+CRC: 61c5e0
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 18169800.58us
+DF:17 AA:6D7FC3 CA:5 ME:4D18226BC6625E
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  6D7FC3 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Baro altitude: 13800 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (79331)
+  CPR longitude: (25182)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*940056264a46fb38f50214eed92b;
+CRC: 057c29
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 18435311.50us
+DF:18 AA:005626 CF:4 ME:4A46FB38F50214
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (9)
+  Other Address: 005626 (unknown addressing scheme)
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8c55617cfd3853ae298529dda0a7;
+CRC: 000012
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 18523676.50us
+DF:17 AA:55617C CA:4 ME:FD3853AE298529
+ Extended Squitter Unknown (31/5)
+  ICAO Address:  55617C (Mode S / ADS-B)
+  Air/Ground:    ground
+
+*945ce0c3205f3746b5e6e095164c;
+CRC: b8505f
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 19460099.92us
+DF:18 AA:5CE0C3 CF:4 ME:205F3746B5E6E0
+ Extended Squitter (Non-Transponder) Aircraft identification and category (4)
+  Other Address: 5CE0C3 (unknown addressing scheme)
+
+*8d5606f9bb88a1fca48dcc45f2a5;
+CRC: d78904
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 20772647.83us
+DF:17 AA:5606F9 CA:5 ME:BB88A1FCA48DCC
+ Extended Squitter Unknown (23/3)
+  ICAO Address:  5606F9 (Mode S / ADS-B)
+  Air/Ground:    airborne
+
+*89e6fb025b1db3c04c95babb706e;
+CRC: 070ace
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 21578037.17us
+DF:17 AA:E6FB02 CA:1 ME:5B1DB3C04C95BA
+ Extended Squitter Airborne position (barometric altitude) (11)
+  ICAO Address:  E6FB02 (Mode S / ADS-B)
+  Baro altitude: 4875 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (122918)
+  CPR longitude: (38330)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8cddbd7507cf37a83d1adb5cc742;
+CRC: 57fab6
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 21737651.50us
+DF:17 AA:DDBD75 CA:4 ME:07CF37A83D1ADB
+ Extended Squitter No position information (airborne or surface) (0)
+  ICAO Address:  DDBD75 (Mode S / ADS-B)
+  Air/Ground:    ground
+  NIC-B:         1
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*947a553352d642d5cc24f7bc18dc;
+CRC: 000011
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 24104299.50us
+DF:18 AA:7A5533 CF:4 ME:52D642D5CC24F7
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  Other Address: 7A5533 (unknown addressing scheme)
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8a761db507035e194272cd967512;
+CRC: 400001
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 24219839.08us
+DF:17 AA:761DB5 CA:2 ME:07035E194272CD
+ Extended Squitter No position information (airborne or surface) (0)
+  ICAO Address:  761DB5 (Mode S / ADS-B)
+  Baro altitude: -475 ft
+  NIC-B:         1
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*8cad2ba89d2f6aab5766232591d1;
+CRC: 00704c
+No. of bit errors fixed: 2
+RSSI: -42.8 dBFS
+Score: 466
+Time: 24737923.50us
+DF:17 AA:AD2BA8 CA:4 ME:9D2F6AAB576623
+ Extended Squitter Unknown (19/5)
+  ICAO Address:  AD2BA8 (Mode S / ADS-B)
+  Air/Ground:    ground
+
+*8e93a8d8f69e80f178f07ab882b5;
+CRC: fff409
+No. of bit errors fixed: 1
+RSSI: -43.7 dBFS
+Score: 700
+Time: 24862554.33us
+DF:17 AA:93A8D8 CA:6 ME:F69E80F178F07A
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  93A8D8 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*8bc763d4162574ffb451a8e56059;
+CRC: 8e0d80
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 25597679.92us
+DF:17 AA:C763D4 CA:3 ME:162574FFB451A8
+ Extended Squitter Aircraft identification and category (2)
+  ICAO Address:  C763D4 (Mode S / ADS-B)
+  Category:      C6
+
+*95a7956d78a81b56e65345174868;
+CRC: f95024
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 26895132.92us
+DF:18 AA:A7956D CF:5 ME:78A81B56E65345
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (15)
+  Other Address: A7956D (TIS-B, other addressing scheme)
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (109427)
+  CPR longitude: (21317)
+  CPR decoding:  none
+  NIC-B:         0
+
+*892cbbd94f76f28101626c87712e;
+CRC: fb1024
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 26972374.00us
+DF:17 AA:2CBBD9 CA:1 ME:4F76F28101626C
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  2CBBD9 (Mode S / ADS-B)
+  Baro altitude: 84000 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (82048)
+  CPR longitude: (90732)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8b0d78aaed417f38307b053eed35;
+CRC: 002080
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 27025801.17us
+DF:17 AA:0D78AA CA:3 ME:ED417F38307B05
+ Extended Squitter Unknown (29/2)
+  ICAO Address:  0D78AA (Mode S / ADS-B)
+
+*969abd35088f2daa854557dc7e21;
+CRC: 2bfd43
+No. of bit errors fixed: 2
+RSSI: -42.8 dBFS
+Score: 466
+Time: 27527659.50us
+DF:18 AA:9ABD35 CF:6 ME:088F2DAA854557
+ Extended Squitter (Non-Transponder) Aircraft identification and category (1)
+  ICAO Address:  9ABD35 (ADS-R)
+  Category:      D0
+
+*9605f6d9d9813a33ba844f2d9207;
+CRC: 03c1b0
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 27598095.75us
+DF:18 AA:05F6D9 CF:6 ME:D9813A33BA844F
+ Extended Squitter (Non-Transponder) Reserved for trajectory change (27/0)
+  ICAO Address:  05F6D9 (ADS-R)
+
+*898c7cbbfa7a65318667b545b4ce;
+CRC: 2bfd43
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 28511099.75us
+DF:17 AA:8C7CBB CA:1 ME:FA7A65318667B5
+ Extended Squitter Unknown (31/2)
+  ICAO Address:  8C7CBB (Mode S / ADS-B)
+
+*976d8a5d19dca95a161ab1cc3837;
+CRC: df994c
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 30718882.58us
+DF:18 AA:6D8A5D CF:7 ME:19DCA95A161AB1
+ Extended Squitter (Non-Transponder) Aircraft identification and category (3)
+  Other Address: 6D8A5D (unknown addressing scheme)
+
+*880f2a80660aada539c072d85bd4;
+CRC: 003837
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 30723074.33us
+DF:17 AA:0F2A80 CA:0 ME:660AADA539C072
+ Extended Squitter Airborne position (barometric altitude) (12)
+  ICAO Address:  0F2A80 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 1700 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (53916)
+  CPR longitude: (114802)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          7
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*937255b289cc950ae9cc5bd5f151;
+CRC: dda4c8
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 31047835.42us
+DF:18 AA:7255B2 CF:3 ME:89CC950AE9CC5B
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (17)
+  Other Address: 7255B2 (TIS-B, Mode A code and track file number)
+
+*91859844689aa4f43a04a593a9ce;
+CRC: 000840
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 32511832.75us
+DF:18 AA:859844 CF:1 ME:689AA4F43A04A5
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (13)
+  Other Address: 859844 (ADS-B, other addressing scheme)
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (31261)
+  CPR longitude: (1189)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          6
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*95214ce78cc4ee79fa513b75e6f6;
+CRC: b062f0
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 34567633.75us
+DF:18 AA:214CE7 CF:5 ME:8CC4EE79FA513B
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (17)
+  Other Address: 214CE7 (TIS-B, other addressing scheme)
+  Baro altitude: 101300 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (81149)
+  CPR longitude: (20795)
+  CPR decoding:  none
+  NIC-B:         0
+
+*8ed15d79f5535f672709ab9b584b;
+CRC: 0e0980
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 34612359.00us
+DF:17 AA:D15D79 CA:6 ME:F5535F672709AB
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  D15D79 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*8d7f372b5a2b814d2cd61cca1215;
+CRC: 003036
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 34632234.58us
+DF:17 AA:7F372B CA:5 ME:5A2B814D2CD61C
+ Extended Squitter Airborne position (barometric altitude) (11)
+  ICAO Address:  7F372B (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Baro altitude: 7600 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (42646)
+  CPR longitude: (54812)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*909d98e1af79dc665fd4c4d96d29;
+CRC: 7a1309
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 36134114.58us
+DF:18 AA:9D98E1 CF:0 ME:AF79DC665FD4C4
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  ICAO Address:  9D98E1 (ADS-B, non-transponder)
+  Geom altitude: 23325 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (13103)
+  CPR longitude: (120004)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8bda1f35ab9ec49871b1adfb25c7;
+CRC: 58717a
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 36321930.67us
+DF:17 AA:DA1F35 CA:3 ME:AB9EC49871B1AD
+ Extended Squitter Airborne position (geometric altitude) (21)
+  ICAO Address:  DA1F35 (Mode S / ADS-B)
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (19512)
+  CPR longitude: (111021)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9635fbbcaba6f799b76679e2351f;
+CRC: f8f2c9
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 37813806.67us
+DF:18 AA:35FBBC CF:6 ME:ABA6F799B76679
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (21)
+  Other Address: 35FBBC (ADS-R, other addressing scheme)
+  Geom altitude: 68100 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (117979)
+  CPR longitude: (91769)
+  CPR decoding:  none
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8aeebe10b6ff6694c5064fd76bee;
+CRC: 1c1f00
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 39234300.17us
+DF:17 AA:EEBE10 CA:2 ME:B6FF6694C5064F
+ Extended Squitter Airborne position (geometric altitude) (22)
+  ICAO Address:  EEBE10 (Mode S / ADS-B)
+  Geom altitude: 49950 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (84578)
+  CPR longitude: (67151)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*9727015b8ebac2ebc9059d1b5b2c;
+CRC: 000220
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 39664135.08us
+DF:18 AA:27015B CF:7 ME:8EBAC2EBC9059D
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (17)
+  Other Address: 27015B (unknown addressing scheme)
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8bb2bc00a3a428859417673426ba;
+CRC: e71856
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 41304497.50us
+DF:17 AA:B2BC00 CA:3 ME:A3A42885941767
+ Extended Squitter Airborne position (geometric altitude) (20)
+  ICAO Address:  B2BC00 (Mode S / ADS-B)
+  Geom altitude: 6100 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (17098)
+  CPR longitude: (5991)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8e7f05ceff45ad92cf12aad6b6ea;
+CRC: cdf9b5
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 41411507.00us
+DF:17 AA:7F05CE CA:6 ME:FF45AD92CF12AA
+ Extended Squitter Unknown (31/7)
+  ICAO Address:  7F05CE (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*8d05889841ea3a47cacbe01dbf51;
+CRC: 0b2df8
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 41517560.42us
+DF:17 AA:058898 CA:5 ME:41EA3A47CACBE0
+ Extended Squitter Surface position (8)
+  ICAO Address:  058898 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Track/Heading  98.4
+  Groundspeed:   10.8 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (74725)
+  CPR longitude: (52192)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*97b3cdad587f4eabaf4cffc4c22d;
+CRC: 3f6d15
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 41581176.67us
+DF:18 AA:B3CDAD CF:7 ME:587F4EABAF4CFF
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (11)
+  Other Address: B3CDAD (unknown addressing scheme)
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8e0853ad4132c1545193639ad22d;
+CRC: b227f5
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 41676197.42us
+DF:17 AA:0853AD CA:6 ME:4132C154519363
+ Extended Squitter Surface position (8)
+  ICAO Address:  0853AD (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   5.2 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (43560)
+  CPR longitude: (103267)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8bdda3f11ce35636a49a64509391;
+CRC: 424b1e
+No. of bit errors fixed: 2
+RSSI: -43.0 dBFS
+Score: 466
+Time: 42321959.17us
+DF:17 AA:DDA3F1 CA:3 ME:1CE35636A49A64
+ Extended Squitter Aircraft identification and category (3)
+  ICAO Address:  DDA3F1 (Mode S / ADS-B)
+  Category:      B4
+
+*95434555648588c8a823f13562ad;
+CRC: 4739d1
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 42515378.83us
+DF:18 AA:434555 CF:5 ME:648588C8A823F1
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (12)
+  Other Address: 434555 (TIS-B, other addressing scheme)
+  Baro altitude: 25600 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (25684)
+  CPR longitude: (9201)
+  CPR decoding:  none
+  NIC-B:         0
+
+*90da96e5d4d8944501d22eec0660;
+CRC: 48a868
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 43730963.75us
+DF:18 AA:DA96E5 CF:0 ME:D4D8944501D22E
+ Extended Squitter (Non-Transponder) Unknown (26/0)
+  ICAO Address:  DA96E5 (ADS-B, non-transponder)
+
+*8c0fc217d31315debd5e9f5188a1;
+CRC: a5c168
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 44497303.25us
+DF:17 AA:0FC217 CA:4 ME:D31315DEBD5E9F
+ Extended Squitter Unknown (26/0)
+  ICAO Address:  0FC217 (Mode S / ADS-B)
+  Air/Ground:    ground
+
+*890a515c570d4959660cf1b1642c;
+CRC: 44be12
+No. of bit errors fixed: 2
+RSSI: -44.2 dBFS
+Score: 466
+Time: 44643258.92us
+DF:17 AA:0A515C CA:1 ME:570D4959660CF1
+ Extended Squitter Airborne position (barometric altitude) (10)
+  ICAO Address:  0A515C (Mode S / ADS-B)
+  Baro altitude: 1500 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (44211)
+  CPR longitude: (3313)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8e4d51e3745ab67abf20e2a2fa31;
+CRC: 002080
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 44805997.50us
+DF:17 AA:4D51E3 CA:6 ME:745AB67ABF20E2
+ Extended Squitter Airborne position (barometric altitude) (14)
+  ICAO Address:  4D51E3 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 43800 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (81247)
+  CPR longitude: (73954)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*936db8e04ae4c7b4c59bdd88cd55;
+CRC: 0c5126
+No. of bit errors fixed: 2
+RSSI: -43.0 dBFS
+Score: 466
+Time: 45191425.75us
+DF:18 AA:6DB8E0 CF:3 ME:4AE4C7B4C59BDD
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (9)
+  ICAO Address:  6DB8E0 (TIS-B)
+
+*89b486e4d1b1639d90e533af34a8;
+CRC: 63b3dc
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 45739935.33us
+DF:17 AA:B486E4 CA:1 ME:D1B1639D90E533
+ Extended Squitter Unknown (26/0)
+  ICAO Address:  B486E4 (Mode S / ADS-B)
+
+*88ef8b7a80584f2077ad905edd4b;
+CRC: 3b19ed
+No. of bit errors fixed: 2
+RSSI: -43.2 dBFS
+Score: 466
+Time: 47258876.58us
+DF:17 AA:EF8B7A CA:0 ME:80584F2077AD90
+ Extended Squitter Airborne position (barometric altitude) (16)
+  ICAO Address:  EF8B7A (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 110700 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (102459)
+  CPR longitude: (109968)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*88ec1885dc7f7076cff4bce2ee5c;
+CRC: 1ba082
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 47454599.83us
+DF:17 AA:EC1885 CA:0 ME:DC7F7076CFF4BC
+ Extended Squitter Reserved for trajectory change (27/0)
+  ICAO Address:  EC1885 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*89ac6355fca8535a4eef77d2ca94;
+CRC: 1e4409
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 47942928.08us
+DF:17 AA:AC6355 CA:1 ME:FCA8535A4EEF77
+ Extended Squitter Unknown (31/4)
+  ICAO Address:  AC6355 (Mode S / ADS-B)
+
+*9469ad90ee89cf562a8a8de563a9;
+CRC: b0feeb
+No. of bit errors fixed: 2
+RSSI: -44.2 dBFS
+Score: 466
+Time: 48107615.08us
+DF:18 AA:69AD90 CF:4 ME:EE89CF562A8A8D
+ Extended Squitter (Non-Transponder) Target state and status (V1) (29/0)
+  Other Address: 69AD90 (unknown addressing scheme)
+
+*8db1acd4c906ebf328133055d725;
+CRC: ffbc80
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 48537588.92us
+DF:17 AA:B1ACD4 CA:5 ME:C906EBF3281330
+ Extended Squitter Unknown (25/0)
+  ICAO Address:  B1ACD4 (Mode S / ADS-B)
+  Air/Ground:    airborne
+
+*915fbad4a2772affded44313e9c4;
+CRC: 95d24b
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 48924076.08us
+DF:18 AA:5FBAD4 CF:1 ME:A2772AFFDED443
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (20)
+  Other Address: 5FBAD4 (ADS-B, other addressing scheme)
+  Geom altitude: 22650 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (98287)
+  CPR longitude: (54339)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*953eae54735af30c8a993ea326f8;
+CRC: 0ad281
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 50035632.75us
+DF:18 AA:3EAE54 CF:5 ME:735AF30C8A993E
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (14)
+  Other Address: 3EAE54 (TIS-B, other addressing scheme)
+  Baro altitude: 81700 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (99909)
+  CPR longitude: (39230)
+  CPR decoding:  none
+  NIC-B:         1
+
+*8fbe75377d4a8bfcc9ef273cd642;
+CRC: b0eaf0
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 51138068.08us
+DF:17 AA:BE7537 CA:7 ME:7D4A8BFCC9EF27
+ Extended Squitter Airborne position (barometric altitude) (15)
+  ICAO Address:  BE7537 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 28700 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (130660)
+  CPR longitude: (126759)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          4
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*90a2ceeab8971d946f6d92adb487;
+CRC: 7a9319
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 51786512.17us
+DF:18 AA:A2CEEA CF:0 ME:B8971D946F6D92
+ Extended Squitter (Non-Transponder) Test message (23/0)
+  ICAO Address:  A2CEEA (ADS-B, non-transponder)
+
+*8e2ca4e517ba9ac2225571742e08;
+CRC: f52712
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 52975337.83us
+DF:17 AA:2CA4E5 CA:6 ME:17BA9AC2225571
+ Extended Squitter Aircraft identification and category (2)
+  ICAO Address:  2CA4E5 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Category:      C7
+
+*97b94d131d652d108e827c5d86cd;
+CRC: 001200
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 53312523.25us
+DF:18 AA:B94D13 CF:7 ME:1D652D108E827C
+ Extended Squitter (Non-Transponder) Aircraft identification and category (3)
+  Other Address: B94D13 (unknown addressing scheme)
+
+*96860be642e86a198cb30c89e808;
+CRC: 9f407f
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 53537076.58us
+DF:18 AA:860BE6 CF:6 ME:42E86A198CB30C
+ Extended Squitter (Non-Transponder) Surface position (8)
+  Other Address: 860BE6 (ADS-R, other addressing scheme)
+  Air/Ground:    ground
+  Track/Heading  16.9
+  Groundspeed:   22.5 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (68806)
+  CPR longitude: (45836)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8d317d1f721dcf4f95c97f4426ab;
+CRC: 70ace0
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 54036230.25us
+DF:17 AA:317D1F CA:5 ME:721DCF4F95C97F
+ Extended Squitter Airborne position (barometric altitude) (14)
+  ICAO Address:  317D1F (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Baro altitude: 4900 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (108490)
+  CPR longitude: (117119)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*941e0555952b790727757532d435;
+CRC: 00b836
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 54922969.92us
+DF:18 AA:1E0555 CF:4 ME:952B7907277575
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (18)
+  Other Address: 1E0555 (unknown addressing scheme)
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*92fd3fe3955593b40f5fbc30bde1;
+CRC: 004000
+No. of bit errors fixed: 1
+RSSI: -43.4 dBFS
+Score: 700
+Time: 55206502.33us
+DF:18 AA:FD3FE3 CF:2 ME:955593B40F5FBC
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (18)
+  Other Address: FD3FE3 (TIS-B, Mode A code and track file number)
+  Baro altitude: 16025 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (121351)
+  CPR longitude: (90044)
+  CPR decoding:  none
+
+*8b10015f4e313558bb1e2cd20cef;
+CRC: aeea82
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 56023409.33us
+DF:17 AA:10015F CA:3 ME:4E313558BB1E2C
+ Extended Squitter Airborne position (barometric altitude) (9)
+  ICAO Address:  10015F (Mode S / ADS-B)
+  Baro altitude: 8675 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (44125)
+  CPR longitude: (73260)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8f4dc943cd55b1d614bd57b29ef9;
+CRC: dfd30a
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 56525762.67us
+DF:17 AA:4DC943 CA:7 ME:CD55B1D614BD57
+ Extended Squitter Unknown (25/0)
+  ICAO Address:  4DC943 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*913e3860533ae56953c2a9bd7167;
+CRC: 000404
+No. of bit errors fixed: 2
+RSSI: -44.2 dBFS
+Score: 466
+Time: 56531308.83us
+DF:18 AA:3E3860 CF:1 ME:533AE56953C2A9
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (10)
+  Other Address: 3E3860 (ADS-B, other addressing scheme)
+  Baro altitude: 113600 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (46249)
+  CPR longitude: (115369)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*899566b56e599574d2b875e376f5;
+CRC: d9f968
+No. of bit errors fixed: 2
+RSSI: -42.8 dBFS
+Score: 466
+Time: 56717243.25us
+DF:17 AA:9566B5 CA:1 ME:6E599574D2B875
+ Extended Squitter Airborne position (barometric altitude) (13)
+  ICAO Address:  9566B5 (Mode S / ADS-B)
+  Baro altitude: 16825 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (47721)
+  CPR longitude: (47221)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          6
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*94d2495311d71b8dba975c294059;
+CRC: 60dca7
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 56966469.17us
+DF:18 AA:D24953 CF:4 ME:11D71B8DBA975C
+ Extended Squitter (Non-Transponder) Aircraft identification and category (2)
+  Other Address: D24953 (unknown addressing scheme)
+
+*96a490d59563bdd6aca7f663caeb;
+CRC: 011c1b
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 57067983.17us
+DF:18 AA:A490D5 CF:6 ME:9563BDD6ACA7F6
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (18)
+  Other Address: A490D5 (ADS-R, other addressing scheme)
+  Baro altitude: 18875 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (60246)
+  CPR longitude: (42998)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*8b36c5992b6d6ed63b23e8becd4d;
+CRC: 70701b
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 58404604.08us
+DF:17 AA:36C599 CA:3 ME:2B6D6ED63B23E8
+ Extended Squitter Surface position (5)
+  ICAO Address:  36C599 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Track/Heading  241.9
+  Groundspeed:   30.5 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (92957)
+  CPR longitude: (74728)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*943ab6692cbe66b8af6ca90d65c5;
+CRC: 7c8695
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 59480243.00us
+DF:18 AA:3AB669 CF:4 ME:2CBE66B8AF6CA9
+ Extended Squitter (Non-Transponder) Surface position (5)
+  Other Address: 3AB669 (unknown addressing scheme)
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*89882e4394e1b2694a59240c1ce0;
+CRC: addd73
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 61121768.92us
+DF:17 AA:882E43 CA:1 ME:94E1B2694A5924
+ Extended Squitter Airborne position (barometric altitude) (18)
+  ICAO Address:  882E43 (Mode S / ADS-B)
+  Baro altitude: 44075 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (79013)
+  CPR longitude: (22820)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          0
+  SIL:           0 (p > 0.1%, unknown type)
+
+*92a0cb0b6af6fe6a585b153e7ccd;
+CRC: c1b94e
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 61128783.42us
+DF:18 AA:A0CB0B CF:2 ME:6AF6FE6A585B15
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (13)
+  ICAO Address:  A0CB0B (TIS-B)
+  Baro altitude: 84100 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (79148)
+  CPR longitude: (23317)
+  CPR decoding:  none
+
+*8b16cb18f02cddfae7d4755daed4;
+CRC: 706e00
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 61495206.08us
+DF:17 AA:16CB18 CA:3 ME:F02CDDFAE7D475
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  16CB18 (Mode S / ADS-B)
+
+*903702ec71e9b28991b508e57bb6;
+CRC: ea00ad
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 63359881.42us
+DF:18 AA:3702EC CF:0 ME:71E9B28991B508
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (14)
+  ICAO Address:  3702EC (ADS-B, non-transponder)
+  Baro altitude: 45675 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (83144)
+  CPR longitude: (111880)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          5
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*979a2aa378f0def1521d8a9ca9b5;
+CRC: 2b707a
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 63407050.00us
+DF:18 AA:9A2AA3 CF:7 ME:78F0DEF1521D8A
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (15)
+  Other Address: 9A2AA3 (unknown addressing scheme)
+  NACp:          4
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*93a626ef9d2885d504293755d5f2;
+CRC: 575537
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 63679383.17us
+DF:18 AA:A626EF CF:3 ME:9D2885D5042937
+ Extended Squitter (Non-Transponder) Unknown (19/0)
+  Other Address: A626EF (TIS-B, Mode A code and track file number)
+
+*94e245e9cd96bfcb299e99afb8dd;
+CRC: 97e66f
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 63798486.25us
+DF:18 AA:E245E9 CF:4 ME:CD96BFCB299E99
+ Extended Squitter (Non-Transponder) Unknown (25/0)
+  Other Address: E245E9 (unknown addressing scheme)
+
+*96656d724cb9d51ade520b34b69b;
+CRC: 408000
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 64093706.25us
+DF:18 AA:656D72 CF:6 ME:4CB9D51ADE520B
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (9)
+  ICAO Address:  656D72 (ADS-R)
+  Baro altitude: 36125 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (36207)
+  CPR longitude: (21003)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*966596878e7f5a42cc2127454fcd;
+CRC: 3ba3a4
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 64555699.08us
+DF:18 AA:659687 CF:6 ME:8E7F5A42CC2127
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (17)
+  ICAO Address:  659687 (ADS-R)
+  Baro altitude: 24325 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (74086)
+  CPR longitude: (8487)
+  CPR decoding:  none
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8cd17ded55d182b8bc2d0f627198;
+CRC: 4fb9c0
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 64677112.83us
+DF:17 AA:D17DED CA:4 ME:55D182B8BC2D0F
+ Extended Squitter Airborne position (barometric altitude) (10)
+  ICAO Address:  D17DED (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (89182)
+  CPR longitude: (11535)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*88360804f66af69865d92c342e12;
+CRC: 103038
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 64791324.25us
+DF:17 AA:360804 CA:0 ME:F66AF69865D92C
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  360804 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*9458b432bbd4455c3aba916a2af2;
+CRC: dd7af7
+No. of bit errors fixed: 2
+RSSI: -44.2 dBFS
+Score: 466
+Time: 64929109.92us
+DF:18 AA:58B432 CF:4 ME:BBD4455C3ABA91
+ Extended Squitter (Non-Transponder) Test message (23/0)
+  Other Address: 58B432 (unknown addressing scheme)
+
+*8aeba41fdaf5ea4ec8729a9e56f4;
+CRC: 418567
+No. of bit errors fixed: 2
+RSSI: -43.4 dBFS
+Score: 466
+Time: 66914794.92us
+DF:17 AA:EBA41F CA:2 ME:DAF5EA4EC8729A
+ Extended Squitter Reserved for trajectory change (27/0)
+  ICAO Address:  EBA41F (Mode S / ADS-B)
+
+*90b155f6c41e177cbe8138ff9957;
+CRC: de31e9
+No. of bit errors fixed: 2
+RSSI: -42.8 dBFS
+Score: 466
+Time: 67360807.67us
+DF:18 AA:B155F6 CF:0 ME:C41E177CBE8138
+ Extended Squitter (Non-Transponder) Reserved for surface system status (24/0)
+  ICAO Address:  B155F6 (ADS-B, non-transponder)
+
+*9740b7974b7fdccc09b74c698422;
+CRC: 226b80
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 67674325.25us
+DF:18 AA:40B797 CF:7 ME:4B7FDCCC09B74C
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (9)
+  Other Address: 40B797 (unknown addressing scheme)
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*89c9a14379a54db2a411971b0b6b;
+CRC: ed026d
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 68438225.17us
+DF:17 AA:C9A143 CA:1 ME:79A54DB2A41197
+ Extended Squitter Airborne position (barometric altitude) (15)
+  ICAO Address:  C9A143 (Mode S / ADS-B)
+  Baro altitude: 31900 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (55634)
+  CPR longitude: (4503)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          4
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8a6c8b1b2c1c4e804190adb04d1e;
+CRC: 008008
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 70908039.42us
+DF:17 AA:6C8B1B CA:2 ME:2C1C4E804190AD
+ Extended Squitter Surface position (5)
+  ICAO Address:  6C8B1B (Mode S / ADS-B)
+  Air/Ground:    ground
+  Track/Heading  191.2
+  Groundspeed:   41.5 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (81952)
+  CPR longitude: (102573)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8dfc8400f46a0c7d4514f51459a5;
+CRC: 51cf19
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 72437728.92us
+DF:17 AA:FC8400 CA:5 ME:F46A0C7D4514F5
+ Extended Squitter Aircraft Operational Coordination (30/0)
+  ICAO Address:  FC8400 (Mode S / ADS-B)
+  Air/Ground:    airborne
+
+*94aa1a85816c960ff16b565e71bb;
+CRC: ee27d4
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 72649599.08us
+DF:18 AA:AA1A85 CF:4 ME:816C960FF16B56
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (16)
+  Other Address: AA1A85 (unknown addressing scheme)
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8cd96f9a6003c939046629565d6e;
+CRC: 791069
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 73910847.42us
+DF:17 AA:D96F9A CA:4 ME:6003C939046629
+ Extended Squitter Airborne position (barometric altitude) (12)
+  ICAO Address:  D96F9A (Mode S / ADS-B)
+  Air/Ground:    ground
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (40066)
+  CPR longitude: (26153)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          7
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*90d3040a0d8ed4dac65a56a3a492;
+CRC: f738b7
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 74198799.83us
+DF:18 AA:D3040A CF:0 ME:0D8ED4DAC65A56
+ Extended Squitter (Non-Transponder) Aircraft identification and category (1)
+  ICAO Address:  D3040A (ADS-B, non-transponder)
+  Category:      D5
+
+*88a1594523f96d6c0320c6e9b8de;
+CRC: dd4610
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 75504764.25us
+DF:17 AA:A15945 CA:0 ME:23F96D6C0320C6
+ Extended Squitter Aircraft identification and category (4)
+  ICAO Address:  A15945 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Category:      A3
+
+*8bacc3a8ba16d6958848020dac39;
+CRC: 001080
+No. of bit errors fixed: 2
+RSSI: -42.7 dBFS
+Score: 466
+Time: 76573200.58us
+DF:17 AA:ACC3A8 CA:3 ME:BA16D695884802
+ Extended Squitter Unknown (23/2)
+  ICAO Address:  ACC3A8 (Mode S / ADS-B)
+
+*8de9dce6848cd811c27d6ae8d4f8;
+CRC: 3ca2f7
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 76894612.75us
+DF:17 AA:E9DCE6 CA:5 ME:848CD811C27D6A
+ Extended Squitter Airborne position (barometric altitude) (16)
+  ICAO Address:  E9DCE6 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (2273)
+  CPR longitude: (32106)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8b400c6885827c1270db1956fad1;
+CRC: 018527
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 77177785.08us
+DF:17 AA:400C68 CA:3 ME:85827C1270DB19
+ Extended Squitter Airborne position (barometric altitude) (16)
+  ICAO Address:  400C68 (Mode S / ADS-B)
+  Baro altitude: 66200 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (2360)
+  CPR longitude: (56089)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          1
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8f9810313a151450ced1fa4d3194;
+CRC: 03ea16
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 77591669.58us
+DF:17 AA:981031 CA:7 ME:3A151450CED1FA
+ Extended Squitter Surface position (7)
+  ICAO Address:  981031 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   12.2 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (10343)
+  CPR longitude: (53754)
+  CPR decoding:  none
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8f45a2925629d7d2c9c6ef920d50;
+CRC: 7c8810
+No. of bit errors fixed: 2
+RSSI: -43.1 dBFS
+Score: 466
+Time: 78543057.25us
+DF:17 AA:45A292 CA:7 ME:5629D7D2C9C6EF
+ Extended Squitter Airborne position (barometric altitude) (10)
+  ICAO Address:  45A292 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Baro altitude: 7325 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (125284)
+  CPR longitude: (116463)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8924853142df3ca9ec5740441ed3;
+CRC: 8ae852
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 80344716.67us
+DF:17 AA:248531 CA:1 ME:42DF3CA9EC5740
+ Extended Squitter Surface position (8)
+  ICAO Address:  248531 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Track/Heading  323.4
+  Groundspeed:   21.5 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (21750)
+  CPR longitude: (22336)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*975903e47cba065a6897132b517c;
+CRC: 70264e
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 81325660.50us
+DF:18 AA:5903E4 CF:7 ME:7CBA065A689713
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (15)
+  Other Address: 5903E4 (unknown addressing scheme)
+  NACp:          4
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8e4c28aefcd4257e3dd6aabd8f2b;
+CRC: 020001
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 81543940.50us
+DF:17 AA:4C28AE CA:6 ME:FCD4257E3DD6AA
+ Extended Squitter Unknown (31/4)
+  ICAO Address:  4C28AE (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*9583453bc9e6c301035e9b0424f5;
+CRC: 0fd441
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 82626599.50us
+DF:18 AA:83453B CF:5 ME:C9E6C301035E9B
+ Extended Squitter (Non-Transponder) Unknown (25/0)
+  Other Address: 83453B (TIS-B, other addressing scheme)
+
+*8997d0b22e742a8b06f5dfe4e1b9;
+CRC: 081000
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 83079943.83us
+DF:17 AA:97D0B2 CA:1 ME:2E742A8B06F5DF
+ Extended Squitter Surface position (5)
+  ICAO Address:  97D0B2 (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   89.0 kt
+  CPR type:      Surface
+  CPR odd flag:  even
+  CPR latitude:  (83331)
+  CPR longitude: (62943)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*8b96bd245930e3246f11020b42f2;
+CRC: 020080
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 84108719.00us
+DF:17 AA:96BD24 CA:3 ME:5930E3246F1102
+ Extended Squitter Airborne position (barometric altitude) (11)
+  ICAO Address:  96BD24 (Mode S / ADS-B)
+  Baro altitude: 112000 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (102967)
+  CPR longitude: (69890)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          8
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9508f576e877d3b15c6a8c8a0b30;
+CRC: 8f8fe1
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 85018665.67us
+DF:18 AA:08F576 CF:5 ME:E877D3B15C6A8C
+ Extended Squitter (Non-Transponder) Target state and status (V1) (29/0)
+  Other Address: 08F576 (TIS-B, other addressing scheme)
+
+*9683ac85e6f9e234a6c50f983da9;
+CRC: 3c4409
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 85846651.92us
+DF:18 AA:83AC85 CF:6 ME:E6F9E234A6C50F
+ Extended Squitter (Non-Transponder) Unknown (28/6)
+  ICAO Address:  83AC85 (ADS-R)
+
+*9179c9574556547eba0fc49b1bff;
+CRC: 001c1b
+No. of bit errors fixed: 1
+RSSI: -44.1 dBFS
+Score: 700
+Time: 86143250.92us
+DF:18 AA:79C957 CF:1 ME:4556547EBA0FC4
+ Extended Squitter (Non-Transponder) Surface position (8)
+  Other Address: 79C957 (ADS-B, other addressing scheme)
+  Air/Ground:    ground
+  Groundspeed:   61.5 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (16221)
+  CPR longitude: (4036)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*96abcd72fb2afc347aaa8d48f491;
+CRC: 0dc441
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 87446933.25us
+DF:18 AA:ABCD72 CF:6 ME:FB2AFC347AAA8D
+ Extended Squitter (Non-Transponder) Unknown (31/3)
+  Other Address: ABCD72 (ADS-R, other addressing scheme)
+
+*935c69bffb7414a1d91555856006;
+CRC: faa0a3
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 87475871.17us
+DF:18 AA:5C69BF CF:3 ME:FB7414A1D91555
+ Extended Squitter (Non-Transponder) Aircraft operational status (airborne) (31/0)
+  Other Address: 5C69BF (TIS-B, Mode A code and track file number)
+
+*8ecb3cab2915968232a91403af58;
+CRC: a622ca
+No. of bit errors fixed: 2
+RSSI: -44.0 dBFS
+Score: 466
+Time: 89631176.75us
+DF:17 AA:CB3CAB CA:6 ME:2915968232A914
+ Extended Squitter Surface position (5)
+  ICAO Address:  CB3CAB (Mode S / ADS-B)
+  Air/Ground:    ground
+  Groundspeed:   4.2 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (82201)
+  CPR longitude: (43284)
+  CPR decoding:  none
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*96bbde06f36258ea8e737df0a559;
+CRC: e3134d
+No. of bit errors fixed: 2
+RSSI: -43.3 dBFS
+Score: 466
+Time: 89973624.17us
+DF:18 AA:BBDE06 CF:6 ME:F36258EA8E737D
+ Extended Squitter (Non-Transponder) Aircraft Operational Coordination (30/0)
+  ICAO Address:  BBDE06 (ADS-R)
+
+*89f18b347f1fea4889cf7211cb6a;
+CRC: f5567e
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 91565275.83us
+DF:17 AA:F18B34 CA:1 ME:7F1FEA4889CF72
+ Extended Squitter Airborne position (barometric altitude) (15)
+  ICAO Address:  F18B34 (Mode S / ADS-B)
+  Baro altitude: 5350 ft
+  CPR type:      Airborne
+  CPR odd flag:  even
+  CPR latitude:  (74820)
+  CPR longitude: (118642)
+  CPR decoding:  none
+  NIC-B:         1
+  NACp:          4
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*92aee86bb1629ee5b687f8aa4f3b;
+CRC: e2b9fb
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 91955467.08us
+DF:18 AA:AEE86B CF:2 ME:B1629EE5B687F8
+ Extended Squitter (Non-Transponder) Airborne position (geometric altitude) (22)
+  Other Address: AEE86B (TIS-B, Mode A code and track file number)
+  Geom altitude: 33000 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (94939)
+  CPR longitude: (34808)
+  CPR decoding:  none
+
+*883dec37ee76babbcb838d6c5a4c;
+CRC: 7e6180
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 92817878.50us
+DF:17 AA:3DEC37 CA:0 ME:EE76BABBCB838D
+ Extended Squitter Unknown (29/3)
+  ICAO Address:  3DEC37 (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*894b84de2148b4539834629ebfd1;
+CRC: 2f705a
+No. of bit errors fixed: 2
+RSSI: -43.8 dBFS
+Score: 466
+Time: 93559685.25us
+DF:17 AA:4B84DE CA:1 ME:2148B453983462
+ Extended Squitter Aircraft identification and category (4)
+  ICAO Address:  4B84DE (Mode S / ADS-B)
+  Category:      A1
+
+*8d2bef72aa0eb7977fe2c5001133;
+CRC: b9dcb7
+No. of bit errors fixed: 2
+RSSI: -43.5 dBFS
+Score: 466
+Time: 94447150.00us
+DF:17 AA:2BEF72 CA:5 ME:AA0EB7977FE2C5
+ Extended Squitter Airborne position (geometric altitude) (21)
+  ICAO Address:  2BEF72 (Mode S / ADS-B)
+  Air/Ground:    airborne
+  Geom altitude: 57700 ft
+  CPR type:      Airborne
+  CPR odd flag:  odd
+  CPR latitude:  (117695)
+  CPR longitude: (123589)
+  CPR decoding:  none
+  NIC-B:         0
+  NACp:          10
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*9427b4c34c91bbeaafe569b4abeb;
+CRC: 15a436
+No. of bit errors fixed: 2
+RSSI: -43.9 dBFS
+Score: 466
+Time: 95478848.83us
+DF:18 AA:27B4C3 CF:4 ME:4C91BBEAAFE569
+ Extended Squitter (Non-Transponder) Airborne position (barometric altitude) (9)
+  Other Address: 27B4C3 (unknown addressing scheme)
+  NACp:          11
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*90a8310d428cd4caa1959294ffc8;
+CRC: 383323
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 96379193.58us
+DF:18 AA:A8310D CF:0 ME:428CD4CAA19592
+ Extended Squitter (Non-Transponder) Surface position (8)
+  ICAO Address:  A8310D (ADS-B, non-transponder)
+  Air/Ground:    ground
+  Track/Heading  216.6
+  Groundspeed:   16.5 kt
+  CPR type:      Surface
+  CPR odd flag:  odd
+  CPR latitude:  (25936)
+  CPR longitude: (103826)
+  CPR decoding:  none
+  NACp:          0
+  SIL:           2 (p <= 0.001%, unknown type)
+
+*94ccc3a40952895d7bc66e5c82db;
+CRC: faa0a3
+No. of bit errors fixed: 2
+RSSI: -43.0 dBFS
+Score: 466
+Time: 96495008.08us
+DF:18 AA:CCC3A4 CF:4 ME:0952895D7BC66E
+ Extended Squitter (Non-Transponder) Aircraft identification and category (1)
+  Other Address: CCC3A4 (unknown addressing scheme)
+
+*95d9e162e1668286d135d063934e;
+CRC: 7fde40
+No. of bit errors fixed: 2
+RSSI: -43.7 dBFS
+Score: 466
+Time: 97362823.75us
+DF:18 AA:D9E162 CF:5 ME:E1668286D135D0
+ Extended Squitter (Non-Transponder) Emergency/priority status (28/1)
+  Other Address: D9E162 (TIS-B, other addressing scheme)
+  Squawk:        6420
+  Emergency/priority:      minimum fuel
+
+*8fcfb78a0a2063aa0aea931dba8c;
+CRC: 100400
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 98101057.00us
+DF:17 AA:CFB78A CA:7 ME:0A2063AA0AEA93
+ Extended Squitter Aircraft identification and category (1)
+  ICAO Address:  CFB78A (Mode S / ADS-B)
+  Air/Ground:    airborne?
+  Category:      D2
+
+*8845ba1d9f7aef2571183cda35cc;
+CRC: e0ac54
+No. of bit errors fixed: 2
+RSSI: -43.6 dBFS
+Score: 466
+Time: 98667030.75us
+DF:17 AA:45BA1D CA:0 ME:9F7AEF2571183C
+ Extended Squitter Unknown (19/7)
+  ICAO Address:  45BA1D (Mode S / ADS-B)
+  Air/Ground:    airborne?
+
+*8db8c79cbbe2f5d4aa79082fe031;
+CRC: eba192
+No. of bit errors fixed: 2
+RSSI: -44.1 dBFS
+Score: 466
+Time: 99260676.00us
+DF:17 AA:B8C79C CA:5 ME:BBE2F5D4AA7908
+ Extended Squitter Unknown (23/3)
+  ICAO Address:  B8C79C (Mode S / ADS-B)
+  Air/Ground:    airborne
+

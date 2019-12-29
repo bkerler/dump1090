@@ -67,29 +67,29 @@ static inline  __attribute__((always_inline)) unsigned getbits(unsigned char *da
 
     if (nby == 5) {
         return
-            ((data[fby] & topmask) << (32 - shift)) |
-            (data[fby + 1] << (24 - shift)) |
-            (data[fby + 2] << (16 - shift)) |
-            (data[fby + 3] << (8 - shift)) |
-            (data[fby + 4] >> shift);
+                ((data[fby] & topmask) << (32 - shift)) |
+                (data[fby + 1] << (24 - shift)) |
+                (data[fby + 2] << (16 - shift)) |
+                (data[fby + 3] << (8 - shift)) |
+                (data[fby + 4] >> shift);
     } else if (nby == 4) {
         return
-            ((data[fby] & topmask) << (24 - shift)) |
-            (data[fby + 1] << (16 - shift)) |
-            (data[fby + 2] << (8 - shift)) |
-            (data[fby + 3] >> shift);
+                ((data[fby] & topmask) << (24 - shift)) |
+                (data[fby + 1] << (16 - shift)) |
+                (data[fby + 2] << (8 - shift)) |
+                (data[fby + 3] >> shift);
     } else if (nby == 3) {
         return
-            ((data[fby] & topmask) << (16 - shift)) |
-            (data[fby + 1] << (8 - shift)) |
-            (data[fby + 2] >> shift);
+                ((data[fby] & topmask) << (16 - shift)) |
+                (data[fby + 1] << (8 - shift)) |
+                (data[fby + 2] >> shift);
     } else if (nby == 2) {
         return
-            ((data[fby] & topmask) << (8 - shift)) |
-            (data[fby + 1] >> shift);
+                ((data[fby] & topmask) << (8 - shift)) |
+                (data[fby + 1] >> shift);
     } else if (nby == 1) {
         return
-            (data[fby] & topmask) >> shift;
+                (data[fby] & topmask) >> shift;
     } else {
         return 0;
     }

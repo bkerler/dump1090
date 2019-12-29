@@ -83,9 +83,9 @@ void faupInitConfig(void) {
 void faupInit(void) {
     // Validate the users Lat/Lon home location inputs
     if ( (Modes.fUserLat >   90.0)  // Latitude must be -90 to +90
-      || (Modes.fUserLat <  -90.0)  // and
-      || (Modes.fUserLon >  360.0)  // Longitude must be -180 to +360
-      || (Modes.fUserLon < -180.0) ) {
+         || (Modes.fUserLat <  -90.0)  // and
+         || (Modes.fUserLon >  360.0)  // Longitude must be -180 to +360
+         || (Modes.fUserLon < -180.0) ) {
         Modes.fUserLat = Modes.fUserLon = 0.0;
     } else if (Modes.fUserLon > 180.0) { // If Longitude is +180 to +360, make it -180 to 0
         Modes.fUserLon -= 360.0;
@@ -109,19 +109,19 @@ void faupInit(void) {
 //
 // ================================ Main ====================================
 //
-static void faup1090showHelp(void) {
+static void showHelp(void) {
     printf(
-"-----------------------------------------------------------------------------\n"
-"| faup1090 ModeS conversion     %45s |\n"
-"-----------------------------------------------------------------------------\n"
-"--net-bo-ipaddr <addr>   IP address to connect to for Beast data (default: 127.0.0.1)\n"
-"--net-bo-port <port>     Port to connect for Beast data (default: 30005)\n"
-"--lat <latitude>         Reference/receiver latitude for surface posn (opt)\n"
-"--lon <longitude>        Reference/receiver longitude for surface posn (opt)\n"
-"--stdout                 REQUIRED. Write results to stdout.\n"
-"--help                   Show this help\n"
-"\n",
-MODES_DUMP1090_VARIANT " " MODES_DUMP1090_VERSION
+            "-----------------------------------------------------------------------------\n"
+            "| faup1090 ModeS conversion     %45s |\n"
+            "-----------------------------------------------------------------------------\n"
+            "--net-bo-ipaddr <addr>   IP address to connect to for Beast data (default: 127.0.0.1)\n"
+            "--net-bo-port <port>     Port to connect for Beast data (default: 30005)\n"
+            "--lat <latitude>         Reference/receiver latitude for surface posn (opt)\n"
+            "--lon <longitude>        Reference/receiver longitude for surface posn (opt)\n"
+            "--stdout                 REQUIRED. Write results to stdout.\n"
+            "--help                   Show this help\n"
+            "\n",
+            MODES_DUMP1090_VARIANT " " MODES_DUMP1090_VERSION
     );
 }
 
@@ -132,7 +132,7 @@ MODES_DUMP1090_VARIANT " " MODES_DUMP1090_VERSION
 // perform tasks we need to do continuously, like accepting new clients
 // from the net, refreshing the screen in interactive mode, and so forth
 //
-void faupbackgroundTasks(void) {
+void faup1090backgroundTasks(void) {
     icaoFilterExpire();
     trackPeriodicUpdate();
     modesNetPeriodicWork();
@@ -165,15 +165,15 @@ int faup1090main(int argc, char **argv) {
         } else if (!strcmp(argv[j],"--lon") && more) {
             Modes.fUserLon = atof(argv[++j]);
         } else if (!strcmp(argv[j],"--help")) {
-            faup1090showHelp();
+            showHelp();
             exit(0);
         } else if (!strcmp(argv[j],"--stdout")) {
             stdout_option = 1;
         } else {
             fprintf(stderr,
-                "Unknown or not enough arguments for option '%s'.\n\n",
-                argv[j]);
-            faup1090showHelp();
+                    "Unknown or not enough arguments for option '%s'.\n\n",
+                    argv[j]);
+            showHelp();
             exit(1);
         }
     }
@@ -181,7 +181,7 @@ int faup1090main(int argc, char **argv) {
     if (!stdout_option) {
         fprintf(stderr,
                 "--stdout is required, output always goes to stdout.\n");
-        faup1090showHelp();
+        showHelp();
         exit(1);
     }
 
@@ -199,7 +199,7 @@ int faup1090main(int argc, char **argv) {
         exit (1);
     }
 
-    sendBeastSettings(c, "Cdfj"); // Beast binary, no filters, CRC checks on, no mode A/C
+    sendBeastSettings(c, "CdfjV"); // Beast binary, no filters, CRC checks on, no mode A/C, verbatim mode on
 
     // Set up output connection on stdout
     fatsv_output = makeFatsvOutputService();
@@ -207,8 +207,9 @@ int faup1090main(int argc, char **argv) {
 
     // Run it until we've lost either connection
     while (!Modes.exit && beast_input->connections && fatsv_output->connections) {
-        faupbackgroundTasks();
-        usleep(100000);
+        struct timespec r = { 0, 100 * 1000 * 1000};
+        faup1090backgroundTasks();
+        nanosleep(&r, NULL);
     }
 
     return 0;

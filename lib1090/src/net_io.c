@@ -48,7 +48,6 @@
 //   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "dump1090.h"
-#include "net_io.h"
 
 /* for PRIX64 */
 #include <inttypes.h>
@@ -73,9 +72,13 @@ static int handleBeastCommand(struct client *c, char *p);
 static int decodeBinMessage(struct client *c, char *p);
 static int decodeHexMessage(struct client *c, char *hex);
 
+static void moveNetClient(struct client *c, struct net_service *new_service);
+
 static void send_raw_heartbeat(struct net_service *service);
 static void send_beast_heartbeat(struct net_service *service);
 static void send_sbs_heartbeat(struct net_service *service);
+
+static void writeBeastMessage(struct net_writer *writer, uint64_t timestamp, double signalLevel, unsigned char *msg, int msgLen);
 
 static void writeFATSVEvent(struct modesMessage *mm, struct aircraft *a);
 static void writeFATSVPositionUpdate(float lat, float lon, float alt);
@@ -144,17 +147,14 @@ struct client *createGenericClient(struct net_service *service, int fd)
         exit(1);
     }
 
-    c->service    = service;
+    c->service    = NULL;
     c->next       = Modes.clients;
     c->fd         = fd;
     c->buflen     = 0;
     c->modeac_requested = 0;
     Modes.clients = c;
 
-    ++service->connections;
-    if (service->writer && service->connections == 1) {
-        service->writer->lastWrite = mstime(); // suppress heartbeat initially
-    }
+    moveNetClient(c, service);
 
     return c;
 }
@@ -255,8 +255,15 @@ void modesInitNet(void) {
     s = serviceInit("Raw TCP output", &Modes.raw_out, send_raw_heartbeat, READ_MODE_IGNORE, NULL, NULL);
     serviceListen(s, Modes.net_bind_address, Modes.net_output_raw_ports);
 
-    s = serviceInit("Beast TCP output", &Modes.beast_out, send_beast_heartbeat, READ_MODE_BEAST_COMMAND, NULL, handleBeastCommand);
-    serviceListen(s, Modes.net_bind_address, Modes.net_output_beast_ports);
+    // we maintain two output services, one producing a stream of verbatim messages, one producing a stream of cooked messages
+    // and switch clients between them if they request a change in mode
+    Modes.beast_cooked_service = serviceInit("Beast TCP output (cooked mode)", &Modes.beast_cooked_out, send_beast_heartbeat, READ_MODE_BEAST_COMMAND, NULL, handleBeastCommand);
+    Modes.beast_verbatim_service = serviceInit("Beast TCP output (verbatim mode)", &Modes.beast_verbatim_out, send_beast_heartbeat, READ_MODE_BEAST_COMMAND, NULL, handleBeastCommand);
+
+    if (Modes.net_verbatim)
+        serviceListen(Modes.beast_verbatim_service, Modes.net_bind_address, Modes.net_output_beast_ports);
+    else
+        serviceListen(Modes.beast_cooked_service, Modes.net_bind_address, Modes.net_output_beast_ports);
 
     s = serviceInit("Basestation TCP output", &Modes.sbs_out, send_sbs_heartbeat, READ_MODE_IGNORE, NULL, NULL);
     serviceListen(s, Modes.net_bind_address, Modes.net_output_sbs_ports);
@@ -372,111 +379,72 @@ static void completeWrite(struct net_writer *writer, void *endptr) {
     }
 }
 
-const uint8_t BEAST_MSG_DELIMITER = 0x1a;
-
-ssize_t formatBeastMessage(struct modesMessage *mm, uint8_t *beastMsgOut, size_t beastMsgLen) {
-    if (mm == NULL || beastMsgOut == NULL || beastMsgLen < MAX_BEAST_MSG_LEN) {
-        return -EINVAL;
-    }
-    int msgLen = mm->msgbits / 8;
-    uint8_t *frame = mm->msg;
-    const uint8_t *beastMsgStart = beastMsgOut;
-    *beastMsgOut++ = BEAST_MSG_DELIMITER;
-    switch (msgLen) {
-        case MODEAC_MSG_BYTES:
-            *beastMsgOut++ = '1';
-            break;
-        case MODES_SHORT_MSG_BYTES:
-            *beastMsgOut++ = '2';
-            break;
-        case MODES_LONG_MSG_BYTES:
-            *beastMsgOut++ = '3';
-            break;
-        default:
-            return -EILSEQ;
-            break;
-    }
-
-    /* timestamp, big-endian, 6-byte */
-    union {
-        uint64_t mlatTimestamp;
-        uint8_t bytes[8];
-    } ts;
-    ts.mlatTimestamp = htobe64(mm->timestampMsg & 0x0000FFFFFFFFFFFF);
-    for (uint8_t *from = ts.bytes; from < ts.bytes+6; ++from) {
-        *beastMsgOut++ = *from;
-        if (*from == BEAST_MSG_DELIMITER) { // escape delimiter
-            *beastMsgOut++ = BEAST_MSG_DELIMITER;
-        }
-    }
-
-    if (mm->signalLevel <= 0.0) {
-        *beastMsgOut++ = 0;
-    } else if (mm->signalLevel >= 1.0) {
-        *beastMsgOut++ = UCHAR_MAX;
-    } else {
-        const uint8_t level = (const uint8_t)(sqrt(mm->signalLevel) * UCHAR_MAX);
-        *beastMsgOut++ = level;
-        if (level == BEAST_MSG_DELIMITER) {
-            *beastMsgOut++ = BEAST_MSG_DELIMITER;
-        }
-    }
-
-    while (msgLen-- > 0) {
-        *beastMsgOut++ = *frame;
-        if (*frame++ == BEAST_MSG_DELIMITER) {
-            *beastMsgOut++ = BEAST_MSG_DELIMITER;
-        }
-    }
-
-    const size_t bytesWritten = beastMsgOut - beastMsgStart;
-    assert(bytesWritten <= MAX_BEAST_MSG_LEN);
-
-    return bytesWritten;
-}
-
 //
 //=========================================================================
 //
 // Write raw output in Beast Binary format with Timestamp to TCP clients
 //
-static void modesSendBeastOutput(struct modesMessage *mm) {
-    int  msgLen = mm->msgbits / 8;
-    char *p = prepareWrite(&Modes.beast_out, 2 + 2 * (7 + msgLen));
+static void modesSendBeastVerbatimOutput(struct modesMessage *mm, struct aircraft __attribute__((unused)) *a) {
+    // Don't forward mlat messages, unless --forward-mlat is set
+    if (mm->source == SOURCE_MLAT && !Modes.forward_mlat)
+        return;
+
+    // Do verbatim output for all messages
+    writeBeastMessage(&Modes.beast_verbatim_out, mm->timestampMsg, mm->signalLevel, mm->verbatim, mm->msgbits / 8);
+}
+
+static void modesSendBeastCookedOutput(struct modesMessage *mm, struct aircraft *a) {
+    // Don't forward mlat messages, unless --forward-mlat is set
+    if (mm->source == SOURCE_MLAT && !Modes.forward_mlat)
+        return;
+
+    // Filter some messages from cooked output
+    // Don't forward 2-bit-corrected messages
+    if (mm->correctedbits >= 2)
+        return;
+
+    // Don't forward unreliable messages
+    if ((a && !a->reliable) && !mm->reliable)
+        return;
+
+    writeBeastMessage(&Modes.beast_cooked_out, mm->timestampMsg, mm->signalLevel, mm->msg, mm->msgbits / 8);
+}
+
+static void writeBeastMessage(struct net_writer *writer, uint64_t timestamp, double signalLevel, unsigned char *msg, int msgLen) {
     char ch;
     int  j;
     int sig;
-    unsigned char *msg = (Modes.net_verbatim ? mm->verbatim : mm->msg);
 
+    char *p = prepareWrite(writer, 2 + 2 * (7 + msgLen));
     if (!p)
         return;
 
     *p++ = 0x1a;
     if      (msgLen == MODES_SHORT_MSG_BYTES)
-      {*p++ = '2';}
+    {*p++ = '2';}
     else if (msgLen == MODES_LONG_MSG_BYTES)
-      {*p++ = '3';}
+    {*p++ = '3';}
     else if (msgLen == MODEAC_MSG_BYTES)
-      {*p++ = '1';}
+    {*p++ = '1';}
     else
-      {return;}
+    {return;}
 
     /* timestamp, big-endian */
-    *p++ = (ch = (mm->timestampMsg >> 40));
+    *p++ = (ch = (timestamp >> 40));
     if (0x1A == ch) {*p++ = ch; }
-    *p++ = (ch = (mm->timestampMsg >> 32));
+    *p++ = (ch = (timestamp >> 32));
     if (0x1A == ch) {*p++ = ch; }
-    *p++ = (ch = (mm->timestampMsg >> 24));
+    *p++ = (ch = (timestamp >> 24));
     if (0x1A == ch) {*p++ = ch; }
-    *p++ = (ch = (mm->timestampMsg >> 16));
+    *p++ = (ch = (timestamp >> 16));
     if (0x1A == ch) {*p++ = ch; }
-    *p++ = (ch = (mm->timestampMsg >> 8));
+    *p++ = (ch = (timestamp >> 8));
     if (0x1A == ch) {*p++ = ch; }
-    *p++ = (ch = (mm->timestampMsg));
+    *p++ = (ch = (timestamp));
     if (0x1A == ch) {*p++ = ch; }
 
-    sig = round(sqrt(mm->signalLevel) * 255);
-    if (mm->signalLevel > 0 && sig < 1)
+    sig = round(sqrt(signalLevel) * 255);
+    if (signalLevel > 0 && sig < 1)
         sig = 1;
     if (sig > 255)
         sig = 255;
@@ -488,7 +456,7 @@ static void modesSendBeastOutput(struct modesMessage *mm) {
         if (0x1A == ch) {*p++ = ch; }
     }
 
-    completeWrite(&Modes.beast_out, p);
+    completeWrite(writer, p);
 }
 
 static void send_beast_heartbeat(struct net_service *service)
@@ -512,12 +480,22 @@ static void send_beast_heartbeat(struct net_service *service)
 //
 // Write raw output to TCP clients
 //
-static void modesSendRawOutput(struct modesMessage *mm) {
-    int  msgLen = mm->msgbits / 8;
-    char *p = prepareWrite(&Modes.raw_out, msgLen*2 + 15);
-    int j;
-    unsigned char *msg = (Modes.net_verbatim ? mm->verbatim : mm->msg);
+static void modesSendRawOutput(struct modesMessage *mm, struct aircraft *a) {
+    // Don't ever forward mlat messages via raw output.
+    if (mm->source == SOURCE_MLAT)
+        return;
 
+    // Filter some messages
+    // Don't forward 2-bit-corrected messages
+    if (mm->correctedbits >= 2)
+        return;
+
+    // Don't forward unreliable messages
+    if ((a && !a->reliable) && !mm->reliable)
+        return;
+
+    int msgLen = mm->msgbits / 8;
+    char *p = prepareWrite(&Modes.raw_out, msgLen*2 + 15);
     if (!p)
         return;
 
@@ -529,7 +507,8 @@ static void modesSendRawOutput(struct modesMessage *mm) {
     } else
         *p++ = '*';
 
-    for (j = 0; j < msgLen; j++) {
+    unsigned char *msg = mm->msg;
+    for (int j = 0; j < msgLen; j++) {
         sprintf(p, "%02X", msg[j]);
         p += 2;
     }
@@ -568,6 +547,22 @@ static void modesSendSBSOutput(struct modesMessage *mm, struct aircraft *a) {
     struct tm    stTime_receive, stTime_now;
     int          msgType;
 
+    // We require a tracked aircraft for SBS output
+    if (!a)
+        return;
+
+    // Don't ever forward 2-bit-corrected messages via SBS output.
+    if (mm->correctedbits >= 2)
+        return;
+
+    // Don't ever forward mlat messages via SBS output.
+    if (mm->source == SOURCE_MLAT)
+        return;
+
+    // Don't ever send unreliable messages via SBS output
+    if (!mm->reliable && !a->reliable)
+        return;
+
     // For now, suppress non-ICAO addresses
     if (mm->addr & MODES_NON_ICAO_ADDRESS)
         return;
@@ -583,43 +578,43 @@ static void modesSendSBSOutput(struct modesMessage *mm, struct aircraft *a) {
 
     // Decide on the basic SBS Message Type
     switch (mm->msgtype) {
-    case 4:
-    case 20:
-        msgType = 5;
-        break;
-        break;
+        case 4:
+        case 20:
+            msgType = 5;
+            break;
+            break;
 
-    case 5:
-    case 21:
-        msgType = 6;
-        break;
+        case 5:
+        case 21:
+            msgType = 6;
+            break;
 
-    case 0:
-    case 16:
-        msgType = 7;
-        break;
+        case 0:
+        case 16:
+            msgType = 7;
+            break;
 
-    case 11:
-        msgType = 8;
-        break;
+        case 11:
+            msgType = 8;
+            break;
 
-    case 17:
-    case 18:
-        if (mm->metype >= 1 && mm->metype <= 4) {
-            msgType = 1;
-        } else if (mm->metype >= 5 && mm->metype <=  8) {
-            msgType = 2;
-        } else if (mm->metype >= 9 && mm->metype <= 18) {
-            msgType = 3;
-        } else if (mm->metype == 19) {
-            msgType = 4;
-        } else {
+        case 17:
+        case 18:
+            if (mm->metype >= 1 && mm->metype <= 4) {
+                msgType = 1;
+            } else if (mm->metype >= 5 && mm->metype <=  8) {
+                msgType = 2;
+            } else if (mm->metype >= 9 && mm->metype <= 18) {
+                msgType = 3;
+            } else if (mm->metype == 19) {
+                msgType = 4;
+            } else {
+                return;
+            }
+            break;
+
+        default:
             return;
-        }
-        break;
-
-    default:
-        return;
     }
 
     // Fields 1 to 6 : SBS message type and ICAO address of the aircraft and some other stuff
@@ -748,15 +743,15 @@ static void modesSendSBSOutput(struct modesMessage *mm, struct aircraft *a) {
 
     // Field 22 is the OnTheGround flag (if we have it)
     switch (mm->airground) {
-    case AG_GROUND:
-        p += sprintf(p, ",-1");
-        break;
-    case AG_AIRBORNE:
-        p += sprintf(p, ",0");
-        break;
-    default:
-        p += sprintf(p, ",");
-        break;
+        case AG_GROUND:
+            p += sprintf(p, ",-1");
+            break;
+        case AG_AIRBORNE:
+            p += sprintf(p, ",0");
+            break;
+        default:
+            p += sprintf(p, ",");
+            break;
     }
 
     p += sprintf(p, "\r\n");
@@ -781,33 +776,80 @@ static void send_sbs_heartbeat(struct net_service *service)
     completeWrite(service->writer, data + len);
 }
 
+const uint8_t BEAST_MSG_DELIMITER = 0x1a;
+
+ssize_t formatBeastMessage(struct modesMessage *mm, uint8_t *beastMsgOut, size_t beastMsgLen) {
+    if (mm == NULL || beastMsgOut == NULL || beastMsgLen < MAX_BEAST_MSG_LEN) {
+        return -EINVAL;
+    }
+    int msgLen = mm->msgbits / 8;
+    uint8_t *frame = mm->msg;
+    const uint8_t *beastMsgStart = beastMsgOut;
+    *beastMsgOut++ = BEAST_MSG_DELIMITER;
+    switch (msgLen) {
+        case MODEAC_MSG_BYTES:
+            *beastMsgOut++ = '1';
+            break;
+        case MODES_SHORT_MSG_BYTES:
+            *beastMsgOut++ = '2';
+            break;
+        case MODES_LONG_MSG_BYTES:
+            *beastMsgOut++ = '3';
+            break;
+        default:
+            return -EILSEQ;
+            break;
+    }
+
+    /* timestamp, big-endian, 6-byte */
+    union {
+        uint64_t mlatTimestamp;
+        uint8_t bytes[8];
+    } ts;
+    ts.mlatTimestamp = htobe64(mm->timestampMsg & 0x0000FFFFFFFFFFFF);
+    for (uint8_t *from = ts.bytes; from < ts.bytes+6; ++from) {
+        *beastMsgOut++ = *from;
+        if (*from == BEAST_MSG_DELIMITER) { // escape delimiter
+            *beastMsgOut++ = BEAST_MSG_DELIMITER;
+        }
+    }
+
+    if (mm->signalLevel <= 0.0) {
+        *beastMsgOut++ = 0;
+    } else if (mm->signalLevel >= 1.0) {
+        *beastMsgOut++ = UCHAR_MAX;
+    } else {
+        const uint8_t level = (const uint8_t)(sqrt(mm->signalLevel) * UCHAR_MAX);
+        *beastMsgOut++ = level;
+        if (level == BEAST_MSG_DELIMITER) {
+            *beastMsgOut++ = BEAST_MSG_DELIMITER;
+        }
+    }
+
+    while (msgLen-- > 0) {
+        *beastMsgOut++ = *frame;
+        if (*frame++ == BEAST_MSG_DELIMITER) {
+            *beastMsgOut++ = BEAST_MSG_DELIMITER;
+        }
+    }
+
+    const size_t bytesWritten = beastMsgOut - beastMsgStart;
+    assert(bytesWritten <= MAX_BEAST_MSG_LEN);
+
+    return bytesWritten;
+}
+
 //
 //=========================================================================
 //
 void modesQueueOutput(struct modesMessage *mm, struct aircraft *a) {
-    int is_mlat = (mm->source == SOURCE_MLAT);
 
-    if (a && !is_mlat && mm->correctedbits < 2) {
-        // Don't ever forward 2-bit-corrected messages via SBS output.
-        // Don't ever forward mlat messages via SBS output.
-        modesSendSBSOutput(mm, a);
-    }
-
-    if (!is_mlat && (Modes.net_verbatim || mm->correctedbits < 2)) {
-        // Forward 2-bit-corrected messages via raw output only if --net-verbatim is set
-        // Don't ever forward mlat messages via raw output.
-        modesSendRawOutput(mm);
-    }
-
-    if ((!is_mlat || Modes.forward_mlat) && (Modes.net_verbatim || mm->correctedbits < 2)) {
-        // Forward 2-bit-corrected messages via beast output only if --net-verbatim is set
-        // Forward mlat messages via beast output only if --forward-mlat is set
-        modesSendBeastOutput(mm);
-    }
-
-    if (a && !is_mlat) {
-        writeFATSVEvent(mm, a);
-    }
+    // Delegate to the format-specific outputs, each of which makes its own decision about filtering messages
+    modesSendSBSOutput(mm, a);
+    modesSendRawOutput(mm, a);
+    modesSendBeastVerbatimOutput(mm, a);
+    modesSendBeastCookedOutput(mm, a);
+    writeFATSVEvent(mm, a);
 }
 
 // Decode a little-endian IEEE754 float (binary32)
@@ -894,6 +936,29 @@ void sendBeastSettings(struct client *c, const char *settings)
     anetWrite(c->fd, buf, len);
 }
 
+// Move a network client to a new service
+static void moveNetClient(struct client *c, struct net_service *new_service)
+{
+    if (c->service == new_service)
+        return;
+
+    if (c->service) {
+        // Flush to ensure correct message framing
+        if (c->service->writer)
+            flushWrites(c->service->writer);
+        --c->service->connections;
+    }
+
+    if (new_service) {
+        // Flush to ensure correct message framing
+        if (new_service->writer)
+            flushWrites(new_service->writer);
+        ++new_service->connections;
+    }
+
+    c->service = new_service;
+}
+
 //
 // Handle a Beast command message.
 // Currently, we just look for the Mode A/C command message
@@ -906,15 +971,22 @@ static int handleBeastCommand(struct client *c, char *p) {
     }
 
     switch (p[1]) {
-    case 'j':
-        c->modeac_requested = 0;
-        break;
-    case 'J':
-        c->modeac_requested = 1;
-        break;
+        case 'j':
+            c->modeac_requested = 0;
+            autoset_modeac();
+            break;
+        case 'J':
+            c->modeac_requested = 1;
+            autoset_modeac();
+            break;
+        case 'v':
+            moveNetClient(c, Modes.beast_cooked_service);
+            break;
+        case 'V':
+            moveNetClient(c, Modes.beast_verbatim_service);
+            break;
     }
 
-    autoset_modeac();
     return 0;
 }
 
@@ -1095,13 +1167,13 @@ static int decodeHexMessage(struct client *c, char *hex) {
     }
 
     if ( (l != (MODEAC_MSG_BYTES      * 2))
-      && (l != (MODES_SHORT_MSG_BYTES * 2))
-      && (l != (MODES_LONG_MSG_BYTES  * 2)) )
-        {return (0);} // Too short or long message... broken
+         && (l != (MODES_SHORT_MSG_BYTES * 2))
+         && (l != (MODES_LONG_MSG_BYTES  * 2)) )
+    {return (0);} // Too short or long message... broken
 
     if ( (0 == Modes.mode_ac)
-      && (l == (MODEAC_MSG_BYTES * 2)) )
-        {return (0);} // Right length for ModeA/C, but not enabled
+         && (l == (MODEAC_MSG_BYTES * 2)) )
+    {return (0);} // Right length for ModeA/C, but not enabled
 
     for (j = 0; j < l; j += 2) {
         int high = hexDigitVal(hex[j]);
@@ -1143,7 +1215,7 @@ __attribute__ ((format (printf,3,0))) static char *safe_vsnprintf(char *p, char 
     return p;
 }
 
- __attribute__ ((format (printf,3,4))) static char *safe_snprintf(char *p, char *end, const char *format, ...)
+__attribute__ ((format (printf,3,4))) static char *safe_snprintf(char *p, char *end, const char *format, ...)
 {
     va_list ap;
     va_start(ap, format);
@@ -1251,13 +1323,13 @@ static struct {
     nav_modes_t flag;
     const char *name;
 } nav_modes_names[] = {
-    { NAV_MODE_AUTOPILOT, "autopilot" },
-    { NAV_MODE_VNAV,      "vnav" },
-    { NAV_MODE_ALT_HOLD,  "althold" },
-    { NAV_MODE_APPROACH,  "approach" },
-    { NAV_MODE_LNAV,      "lnav" },
-    { NAV_MODE_TCAS,      "tcas" },
-    { 0, NULL }
+        { NAV_MODE_AUTOPILOT, "autopilot" },
+        { NAV_MODE_VNAV,      "vnav" },
+        { NAV_MODE_ALT_HOLD,  "althold" },
+        { NAV_MODE_APPROACH,  "approach" },
+        { NAV_MODE_LNAV,      "lnav" },
+        { NAV_MODE_TCAS,      "tcas" },
+        { 0, NULL }
 };
 
 static char *append_nav_modes(char *p, char *end, nav_modes_t flags, const char *quote, const char *sep)
@@ -1288,60 +1360,60 @@ static const char *nav_modes_flags_string(nav_modes_t flags) {
 
 static const char *addrtype_enum_string(addrtype_t type) {
     switch (type) {
-    case ADDR_ADSB_ICAO:
-        return "adsb_icao";
-    case ADDR_ADSB_ICAO_NT:
-        return "adsb_icao_nt";
-    case ADDR_ADSR_ICAO:
-        return "adsr_icao";
-    case ADDR_TISB_ICAO:
-        return "tisb_icao";
-    case ADDR_ADSB_OTHER:
-        return "adsb_other";
-    case ADDR_ADSR_OTHER:
-        return "adsr_other";
-    case ADDR_TISB_OTHER:
-        return "tisb_other";
-    case ADDR_TISB_TRACKFILE:
-        return "tisb_trackfile";
-    default:
-        return "unknown";
+        case ADDR_ADSB_ICAO:
+            return "adsb_icao";
+        case ADDR_ADSB_ICAO_NT:
+            return "adsb_icao_nt";
+        case ADDR_ADSR_ICAO:
+            return "adsr_icao";
+        case ADDR_TISB_ICAO:
+            return "tisb_icao";
+        case ADDR_ADSB_OTHER:
+            return "adsb_other";
+        case ADDR_ADSR_OTHER:
+            return "adsr_other";
+        case ADDR_TISB_OTHER:
+            return "tisb_other";
+        case ADDR_TISB_TRACKFILE:
+            return "tisb_trackfile";
+        default:
+            return "unknown";
     }
 }
 
 static const char *emergency_enum_string(emergency_t emergency)
 {
     switch (emergency) {
-    case EMERGENCY_NONE:      return "none";
-    case EMERGENCY_GENERAL:   return "general";
-    case EMERGENCY_LIFEGUARD: return "lifeguard";
-    case EMERGENCY_MINFUEL:   return "minfuel";
-    case EMERGENCY_NORDO:     return "nordo";
-    case EMERGENCY_UNLAWFUL:  return "unlawful";
-    case EMERGENCY_DOWNED:    return "downed";
-    default:                  return "reserved";
+        case EMERGENCY_NONE:      return "none";
+        case EMERGENCY_GENERAL:   return "general";
+        case EMERGENCY_LIFEGUARD: return "lifeguard";
+        case EMERGENCY_MINFUEL:   return "minfuel";
+        case EMERGENCY_NORDO:     return "nordo";
+        case EMERGENCY_UNLAWFUL:  return "unlawful";
+        case EMERGENCY_DOWNED:    return "downed";
+        default:                  return "reserved";
     }
 }
 
 static const char *sil_type_enum_string(sil_type_t type)
 {
     switch (type) {
-    case SIL_UNKNOWN: return "unknown";
-    case SIL_PER_HOUR: return "perhour";
-    case SIL_PER_SAMPLE: return "persample";
-    default: return "invalid";
+        case SIL_UNKNOWN: return "unknown";
+        case SIL_PER_HOUR: return "perhour";
+        case SIL_PER_SAMPLE: return "persample";
+        default: return "invalid";
     }
 }
 
 static const char *nav_altitude_source_enum_string(nav_altitude_source_t src)
 {
     switch (src) {
-    case NAV_ALT_INVALID:  return "invalid";
-    case NAV_ALT_UNKNOWN:  return "unknown";
-    case NAV_ALT_AIRCRAFT: return "aircraft";
-    case NAV_ALT_MCP:      return "mcp";
-    case NAV_ALT_FMS:      return "fms";
-    default:               return "invalid";
+        case NAV_ALT_INVALID:  return "invalid";
+        case NAV_ALT_UNKNOWN:  return "unknown";
+        case NAV_ALT_AIRCRAFT: return "aircraft";
+        case NAV_ALT_MCP:      return "mcp";
+        case NAV_ALT_FMS:      return "fms";
+        default:               return "invalid";
     }
 }
 
@@ -1358,14 +1430,14 @@ char *generateAircraftJson(const char *url_path, int *len) {
     _messageNow = now;
 
     p = safe_snprintf(p, end,
-                       "{ \"now\" : %.1f,\n"
-                       "  \"messages\" : %u,\n"
-                       "  \"aircraft\" : [",
-                       now / 1000.0,
-                       Modes.stats_current.messages_total + Modes.stats_alltime.messages_total);
+                      "{ \"now\" : %.1f,\n"
+                      "  \"messages\" : %u,\n"
+                      "  \"aircraft\" : [",
+                      now / 1000.0,
+                      Modes.stats_current.messages_total + Modes.stats_alltime.messages_total);
 
     for (a = Modes.aircrafts; a; a = a->next) {
-        if (a->messages < 2) { // basic filter for bad decodes
+        if (!a->reliable) {
             continue;
         }
 
@@ -1374,7 +1446,7 @@ char *generateAircraftJson(const char *url_path, int *len) {
         else
             *p++ = ',';
 
-    retry:
+        retry:
         line_start = p;
         p = safe_snprintf(p, end, "\n    {\"hex\":\"%s%06x\"", (a->addr & MODES_NON_ICAO_ADDRESS) ? "~" : "", a->addr & 0xFFFFFF);
         if (a->addrtype != ADDR_ADSB_ICAO)
@@ -1382,8 +1454,13 @@ char *generateAircraftJson(const char *url_path, int *len) {
         if (trackDataValid(&a->callsign_valid))
             p = safe_snprintf(p, end, ",\"flight\":\"%s\"", jsonEscapeString(a->callsign));
         if (trackDataValid(&a->airground_valid) && a->airground_valid.source >= SOURCE_MODE_S_CHECKED && a->airground == AG_GROUND)
+            //p = safe_snprintf(p, end, ",\"alt_baro\":\"ground\"");
             p = safe_snprintf(p, end, ",\"alt_baro\":\"ground\",\"altitude\":\"ground\"");
         else {
+            /*if (trackDataValid(&a->altitude_baro_valid))
+                p = safe_snprintf(p, end, ",\"alt_baro\":%d", a->altitude_baro);
+            if (trackDataValid(&a->altitude_geom_valid))
+                p = safe_snprintf(p, end, ",\"alt_geom\":%d", a->altitude_geom);*/
             const bool alt_baro_valid = trackDataValid(&a->altitude_baro_valid);
             const bool alt_geom_valid = trackDataValid(&a->altitude_geom_valid);
             if (alt_baro_valid) { // print as generic altitude for older readers
@@ -1398,6 +1475,7 @@ char *generateAircraftJson(const char *url_path, int *len) {
             }
         }
         if (trackDataValid(&a->gs_valid))
+            //p = safe_snprintf(p, end, ",\"gs\":%.1f", a->gs);
             p = safe_snprintf(p, end, ",\"gs\":%.1f,\"speed\":%.1f", a->gs, a->gs);
         if (trackDataValid(&a->ias_valid))
             p = safe_snprintf(p, end, ",\"ias\":%u", a->ias);
@@ -1427,9 +1505,9 @@ char *generateAircraftJson(const char *url_path, int *len) {
             p = safe_snprintf(p, end, ",\"category\":\"%02X\"", a->category);
         if (trackDataValid(&a->nav_qnh_valid))
             p = safe_snprintf(p, end, ",\"nav_qnh\":%.1f", a->nav_qnh);
-         if (trackDataValid(&a->nav_altitude_mcp_valid))
+        if (trackDataValid(&a->nav_altitude_mcp_valid))
             p = safe_snprintf(p, end, ",\"nav_altitude_mcp\":%d", a->nav_altitude_mcp);
-         if (trackDataValid(&a->nav_altitude_fms_valid))
+        if (trackDataValid(&a->nav_altitude_fms_valid))
             p = safe_snprintf(p, end, ",\"nav_altitude_fms\":%d", a->nav_altitude_fms);
         if (trackDataValid(&a->nav_heading_valid))
             p = safe_snprintf(p, end, ",\"nav_heading\":%.1f", a->nav_heading);
@@ -1464,9 +1542,9 @@ char *generateAircraftJson(const char *url_path, int *len) {
         p = append_flags(p, end, a, SOURCE_TISB);
 
         p = safe_snprintf(p, end, ",\"messages\":%ld,\"seen\":%.1f,\"rssi\":%.1f}",
-                      a->messages, (now - a->seen)/1000.0,
-                      10 * log10((a->signalLevel[0] + a->signalLevel[1] + a->signalLevel[2] + a->signalLevel[3] +
-                                  a->signalLevel[4] + a->signalLevel[5] + a->signalLevel[6] + a->signalLevel[7] + 1e-5) / 8));
+                          a->messages, (now - a->seen)/1000.0,
+                          10 * log10((a->signalLevel[0] + a->signalLevel[1] + a->signalLevel[2] + a->signalLevel[3] +
+                                      a->signalLevel[4] + a->signalLevel[5] + a->signalLevel[6] + a->signalLevel[7] + 1e-5) / 8));
 
         if ((p + 10) >= end) { // +10 to leave some space for the final line
             // overran the buffer
@@ -1492,25 +1570,25 @@ static char * appendStatsJson(char *p,
     int i;
 
     p = safe_snprintf(p, end,
-                       "\"%s\":{\"start\":%.1f,\"end\":%.1f",
-                       key,
-                       st->start / 1000.0,
-                       st->end / 1000.0);
+                      "\"%s\":{\"start\":%.1f,\"end\":%.1f",
+                      key,
+                      st->start / 1000.0,
+                      st->end / 1000.0);
 
     if (!Modes.net_only) {
         p = safe_snprintf(p, end,
-                           ",\"local\":{\"samples_processed\":%llu"
-                           ",\"samples_dropped\":%llu"
-                           ",\"modeac\":%u"
-                           ",\"modes\":%u"
-                           ",\"bad\":%u"
-                           ",\"unknown_icao\":%u",
-                           (unsigned long long)st->samples_processed,
-                           (unsigned long long)st->samples_dropped,
-                           st->demod_modeac,
-                           st->demod_preambles,
-                           st->demod_rejected_bad,
-                           st->demod_rejected_unknown_icao);
+                          ",\"local\":{\"samples_processed\":%llu"
+                          ",\"samples_dropped\":%llu"
+                          ",\"modeac\":%u"
+                          ",\"modes\":%u"
+                          ",\"bad\":%u"
+                          ",\"unknown_icao\":%u",
+                          (unsigned long long)st->samples_processed,
+                          (unsigned long long)st->samples_dropped,
+                          st->demod_modeac,
+                          st->demod_preambles,
+                          st->demod_rejected_bad,
+                          st->demod_rejected_unknown_icao);
 
         for (i=0; i <= Modes.nfix_crc; ++i) {
             if (i == 0) p = safe_snprintf(p, end, ",\"accepted\":[%u", st->demod_accepted[i]);
@@ -1531,14 +1609,14 @@ static char * appendStatsJson(char *p,
 
     if (Modes.net) {
         p = safe_snprintf(p, end,
-                           ",\"remote\":{\"modeac\":%u"
-                           ",\"modes\":%u"
-                           ",\"bad\":%u"
-                           ",\"unknown_icao\":%u",
-                           st->remote_received_modeac,
-                           st->remote_received_modes,
-                           st->remote_rejected_bad,
-                           st->remote_rejected_unknown_icao);
+                          ",\"remote\":{\"modeac\":%u"
+                          ",\"modes\":%u"
+                          ",\"bad\":%u"
+                          ",\"unknown_icao\":%u",
+                          st->remote_received_modeac,
+                          st->remote_received_modes,
+                          st->remote_rejected_bad,
+                          st->remote_rejected_unknown_icao);
 
         for (i=0; i <= Modes.nfix_crc; ++i) {
             if (i == 0) p = safe_snprintf(p, end, ",\"accepted\":[%u", st->remote_accepted[i]);
@@ -1554,46 +1632,48 @@ static char * appendStatsJson(char *p,
         uint64_t background_cpu_millis = (uint64_t)st->background_cpu.tv_sec*1000UL + st->background_cpu.tv_nsec/1000000UL;
 
         p = safe_snprintf(p, end,
-                           ",\"cpr\":{\"surface\":%u"
-                           ",\"airborne\":%u"
-                           ",\"global_ok\":%u"
-                           ",\"global_bad\":%u"
-                           ",\"global_range\":%u"
-                           ",\"global_speed\":%u"
-                           ",\"global_skipped\":%u"
-                           ",\"local_ok\":%u"
-                           ",\"local_aircraft_relative\":%u"
-                           ",\"local_receiver_relative\":%u"
-                           ",\"local_skipped\":%u"
-                           ",\"local_range\":%u"
-                           ",\"local_speed\":%u"
-                           ",\"filtered\":%u}"
-                           ",\"altitude_suppressed\":%u"
-                           ",\"cpu\":{\"demod\":%llu,\"reader\":%llu,\"background\":%llu}"
-                           ",\"tracks\":{\"all\":%u"
-                           ",\"single_message\":%u}"
-                           ",\"messages\":%u}",
-                           st->cpr_surface,
-                           st->cpr_airborne,
-                           st->cpr_global_ok,
-                           st->cpr_global_bad,
-                           st->cpr_global_range_checks,
-                           st->cpr_global_speed_checks,
-                           st->cpr_global_skipped,
-                           st->cpr_local_ok,
-                           st->cpr_local_aircraft_relative,
-                           st->cpr_local_receiver_relative,
-                           st->cpr_local_skipped,
-                           st->cpr_local_range_checks,
-                           st->cpr_local_speed_checks,
-                           st->cpr_filtered,
-                           st->suppressed_altitude_messages,
-                           (unsigned long long)demod_cpu_millis,
-                           (unsigned long long)reader_cpu_millis,
-                           (unsigned long long)background_cpu_millis,
-                           st->unique_aircraft,
-                           st->single_message_aircraft,
-                           st->messages_total);
+                          ",\"cpr\":{\"surface\":%u"
+                          ",\"airborne\":%u"
+                          ",\"global_ok\":%u"
+                          ",\"global_bad\":%u"
+                          ",\"global_range\":%u"
+                          ",\"global_speed\":%u"
+                          ",\"global_skipped\":%u"
+                          ",\"local_ok\":%u"
+                          ",\"local_aircraft_relative\":%u"
+                          ",\"local_receiver_relative\":%u"
+                          ",\"local_skipped\":%u"
+                          ",\"local_range\":%u"
+                          ",\"local_speed\":%u"
+                          ",\"filtered\":%u}"
+                          ",\"altitude_suppressed\":%u"
+                          ",\"cpu\":{\"demod\":%llu,\"reader\":%llu,\"background\":%llu}"
+                          ",\"tracks\":{\"all\":%u"
+                          ",\"single_message\":%u"
+                          ",\"unreliable\":%u}"
+                          ",\"messages\":%u}",
+                          st->cpr_surface,
+                          st->cpr_airborne,
+                          st->cpr_global_ok,
+                          st->cpr_global_bad,
+                          st->cpr_global_range_checks,
+                          st->cpr_global_speed_checks,
+                          st->cpr_global_skipped,
+                          st->cpr_local_ok,
+                          st->cpr_local_aircraft_relative,
+                          st->cpr_local_receiver_relative,
+                          st->cpr_local_skipped,
+                          st->cpr_local_range_checks,
+                          st->cpr_local_speed_checks,
+                          st->cpr_filtered,
+                          st->suppressed_altitude_messages,
+                          (unsigned long long)demod_cpu_millis,
+                          (unsigned long long)reader_cpu_millis,
+                          (unsigned long long)background_cpu_millis,
+                          st->unique_aircraft,
+                          st->single_message_aircraft,
+                          st->unreliable_aircraft,
+                          st->messages_total);
     }
 
     return p;
@@ -1646,20 +1726,20 @@ char *generateReceiverJson(const char *url_path, int *len)
 
     p += sprintf(p, "{ " \
                  "\"version\" : \"%s\", "
-                 "\"refresh\" : %.0f, "
-                 "\"history\" : %d",
+                    "\"refresh\" : %.0f, "
+                    "\"history\" : %d",
                  MODES_DUMP1090_VERSION, 1.0*Modes.json_interval, history_size);
 
     if (Modes.json_location_accuracy && (Modes.fUserLat != 0.0 || Modes.fUserLon != 0.0)) {
         if (Modes.json_location_accuracy == 1) {
             p += sprintf(p, ", "                \
                          "\"lat\" : %.2f, "
-                         "\"lon\" : %.2f",
+                            "\"lon\" : %.2f",
                          Modes.fUserLat, Modes.fUserLon);  // round to 2dp - about 0.5-1km accuracy - for privacy reasons
         } else {
             p += sprintf(p, ", "                \
                          "\"lat\" : %.6f, "
-                         "\"lon\" : %.6f",
+                            "\"lon\" : %.6f",
                          Modes.fUserLat, Modes.fUserLon);  // exact location
         }
     }
@@ -1727,9 +1807,9 @@ void writeJsonToFile(const char *file, char * (*generator) (const char *,int*))
     free(content);
     return;
 
- error_1:
+    error_1:
     close(fd);
- error_2:
+    error_2:
     unlink(tmppath);
     free(content);
     return;
@@ -1786,7 +1866,7 @@ static void modesReadFromClient(struct client *c) {
 #ifndef _WIN32
         if (nread < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)) // No data available (not really an error)
 #else
-        if (nread < 0 && errno == EWOULDBLOCK) // No data available (not really an error)
+            if (nread < 0 && errno == EWOULDBLOCK) // No data available (not really an error)
 #endif
         {
             return;
@@ -1804,128 +1884,128 @@ static void modesReadFromClient(struct client *c) {
         char *p;
 
         switch (c->service->read_mode) {
-        case READ_MODE_IGNORE:
-            // drop the bytes on the floor
-            som = eod;
-            break;
+            case READ_MODE_IGNORE:
+                // drop the bytes on the floor
+                som = eod;
+                break;
 
-        case READ_MODE_BEAST:
-            // This is the Beast Binary scanning case.
-            // If there is a complete message still in the buffer, there must be the separator 'sep'
-            // in the buffer, note that we full-scan the buffer at every read for simplicity.
+            case READ_MODE_BEAST:
+                // This is the Beast Binary scanning case.
+                // If there is a complete message still in the buffer, there must be the separator 'sep'
+                // in the buffer, note that we full-scan the buffer at every read for simplicity.
 
-            while (som < eod && ((p = memchr(som, (char) 0x1a, eod - som)) != NULL)) { // The first byte of buffer 'should' be 0x1a
-                som = p; // consume garbage up to the 0x1a
-                ++p; // skip 0x1a
+                while (som < eod && ((p = memchr(som, (char) 0x1a, eod - som)) != NULL)) { // The first byte of buffer 'should' be 0x1a
+                    som = p; // consume garbage up to the 0x1a
+                    ++p; // skip 0x1a
 
-                if (p >= eod) {
-                    // Incomplete message in buffer, retry later
-                    break;
-                }
-
-                char *eom; // one byte past end of message
-                if        (*p == '1') {
-                    eom = p + MODEAC_MSG_BYTES      + 8;         // point past remainder of message
-                } else if (*p == '2') {
-                    eom = p + MODES_SHORT_MSG_BYTES + 8;
-                } else if (*p == '3') {
-                    eom = p + MODES_LONG_MSG_BYTES  + 8;
-                } else if (*p == '4') {
-                    eom = p + MODES_LONG_MSG_BYTES  + 8;
-                } else if (*p == '5') {
-                    eom = p + MODES_LONG_MSG_BYTES  + 8;
-                } else {
-                    // Not a valid beast message, skip 0x1a and try again
-                    ++som;
-                    continue;
-                }
-
-                // we need to be careful of double escape characters in the message body
-                for (p = som + 1; p < eod && p < eom; p++) {
-                    if (0x1A == *p) {
-                        p++;
-                        eom++;
+                    if (p >= eod) {
+                        // Incomplete message in buffer, retry later
+                        break;
                     }
-                }
 
-                if (eom > eod) { // Incomplete message in buffer, retry later
-                    break;
-                }
-
-                // Have a 0x1a followed by 1/2/3/4/5 - pass message to handler.
-                if (c->service->read_handler(c, som + 1)) {
-                    modesCloseClient(c);
-                    return;
-                }
-
-                // advance to next message
-                som = eom;
-            }
-            break;
-
-        case READ_MODE_BEAST_COMMAND:
-            while (som < eod && ((p = memchr(som, (char) 0x1a, eod - som)) != NULL)) { // The first byte of buffer 'should' be 0x1a
-                char *eom; // one byte past end of message
-
-                som = p; // consume garbage up to the 0x1a
-                ++p; // skip 0x1a
-
-                if (p >= eod) {
-                    // Incomplete message in buffer, retry later
-                    break;
-                }
-
-                if (*p == '1') {
-                    eom = p + 2;
-                } else {
-                    // Not a valid beast command, skip 0x1a and try again
-                    ++som;
-                    continue;
-                }
-
-                // we need to be careful of double escape characters in the message body
-                for (p = som + 1; p < eod && p < eom; p++) {
-                    if (0x1A == *p) {
-                        p++;
-                        eom++;
+                    char *eom; // one byte past end of message
+                    if        (*p == '1') {
+                        eom = p + MODEAC_MSG_BYTES      + 8;         // point past remainder of message
+                    } else if (*p == '2') {
+                        eom = p + MODES_SHORT_MSG_BYTES + 8;
+                    } else if (*p == '3') {
+                        eom = p + MODES_LONG_MSG_BYTES  + 8;
+                    } else if (*p == '4') {
+                        eom = p + MODES_LONG_MSG_BYTES  + 8;
+                    } else if (*p == '5') {
+                        eom = p + MODES_LONG_MSG_BYTES  + 8;
+                    } else {
+                        // Not a valid beast message, skip 0x1a and try again
+                        ++som;
+                        continue;
                     }
+
+                    // we need to be careful of double escape characters in the message body
+                    for (p = som + 1; p < eod && p < eom; p++) {
+                        if (0x1A == *p) {
+                            p++;
+                            eom++;
+                        }
+                    }
+
+                    if (eom > eod) { // Incomplete message in buffer, retry later
+                        break;
+                    }
+
+                    // Have a 0x1a followed by 1/2/3/4/5 - pass message to handler.
+                    if (c->service->read_handler(c, som + 1)) {
+                        modesCloseClient(c);
+                        return;
+                    }
+
+                    // advance to next message
+                    som = eom;
+                }
+                break;
+
+            case READ_MODE_BEAST_COMMAND:
+                while (som < eod && ((p = memchr(som, (char) 0x1a, eod - som)) != NULL)) { // The first byte of buffer 'should' be 0x1a
+                    char *eom; // one byte past end of message
+
+                    som = p; // consume garbage up to the 0x1a
+                    ++p; // skip 0x1a
+
+                    if (p >= eod) {
+                        // Incomplete message in buffer, retry later
+                        break;
+                    }
+
+                    if (*p == '1') {
+                        eom = p + 2;
+                    } else {
+                        // Not a valid beast command, skip 0x1a and try again
+                        ++som;
+                        continue;
+                    }
+
+                    // we need to be careful of double escape characters in the message body
+                    for (p = som + 1; p < eod && p < eom; p++) {
+                        if (0x1A == *p) {
+                            p++;
+                            eom++;
+                        }
+                    }
+
+                    if (eom > eod) { // Incomplete message in buffer, retry later
+                        break;
+                    }
+
+                    // Have a 0x1a followed by 1 - pass message to handler.
+                    if (c->service->read_handler(c, som + 1)) {
+                        modesCloseClient(c);
+                        return;
+                    }
+
+                    // advance to next message
+                    som = eom;
+                }
+                break;
+
+            case READ_MODE_ASCII:
+                //
+                // This is the ASCII scanning case, AVR RAW or HTTP at present
+                // If there is a complete message still in the buffer, there must be the separator 'sep'
+                // in the buffer, note that we full-scan the buffer at every read for simplicity.
+
+                // Always NUL-terminate so we are free to use strstr()
+                // nb: we never fill the last byte of the buffer with read data (see above) so this is safe
+                *eod = '\0';
+
+                while (som < eod && (p = strstr(som, c->service->read_sep)) != NULL) { // end of first message if found
+                    *p = '\0';                         // The handler expects null terminated strings
+                    if (c->service->read_handler(c, som)) {         // Pass message to handler.
+                        modesCloseClient(c);           // Handler returns 1 on error to signal we .
+                        return;                        // should close the client connection
+                    }
+                    som = p + strlen(c->service->read_sep);               // Move to start of next message
                 }
 
-                if (eom > eod) { // Incomplete message in buffer, retry later
-                    break;
-                }
-
-                // Have a 0x1a followed by 1 - pass message to handler.
-                if (c->service->read_handler(c, som + 1)) {
-                    modesCloseClient(c);
-                    return;
-                }
-
-                // advance to next message
-                som = eom;
-            }
-            break;
-
-        case READ_MODE_ASCII:
-            //
-            // This is the ASCII scanning case, AVR RAW or HTTP at present
-            // If there is a complete message still in the buffer, there must be the separator 'sep'
-            // in the buffer, note that we full-scan the buffer at every read for simplicity.
-
-            // Always NUL-terminate so we are free to use strstr()
-            // nb: we never fill the last byte of the buffer with read data (see above) so this is safe
-            *eod = '\0';
-
-            while (som < eod && (p = strstr(som, c->service->read_sep)) != NULL) { // end of first message if found
-                *p = '\0';                         // The handler expects null terminated strings
-                if (c->service->read_handler(c, som)) {         // Pass message to handler.
-                    modesCloseClient(c);           // Handler returns 1 on error to signal we .
-                    return;                        // should close the client connection
-                }
-                som = p + strlen(c->service->read_sep);               // Move to start of next message
-            }
-
-            break;
+                break;
         }
 
         if (som > c->buf) {                        // We processed something - so
@@ -1951,7 +2031,7 @@ __attribute__ ((format (printf,4,5))) static char *appendFATSV(char *p, char *en
 }
 
 #define TSV_MAX_PACKET_SIZE 800
-#define TSV_VERSION "6E"
+#define TSV_VERSION "7E"
 
 static void writeFATSVPositionUpdate(float lat, float lon, float alt)
 {
@@ -2022,50 +2102,50 @@ static void writeFATSVEvent(struct modesMessage *mm, struct aircraft *a)
         return; // not enabled or no active connections
     }
 
-    if (a->messages < 2)  // basic filter for bad decodes
+    if (!a || mm->source == SOURCE_MLAT || (!a->reliable && !mm->reliable))
         return;
 
     switch (mm->msgtype) {
-    case 20:
-    case 21:
-        // DF 20/21: Comm-B: emit if they've changed since we last sent them
-        switch (mm->commb_format) {
-        case COMMB_DATALINK_CAPS:
-            // BDS 1,0: data link capability report
-            if (memcmp(mm->MB, a->fatsv_emitted_bds_10, 7) != 0) {
-                memcpy(a->fatsv_emitted_bds_10, mm->MB, 7);
-                writeFATSVEventMessage(mm, "datalink_caps", mm->MB, 7);
+        case 20:
+        case 21:
+            // DF 20/21: Comm-B: emit if they've changed since we last sent them
+            switch (mm->commb_format) {
+                case COMMB_DATALINK_CAPS:
+                    // BDS 1,0: data link capability report
+                    if (memcmp(mm->MB, a->fatsv_emitted_bds_10, 7) != 0) {
+                        memcpy(a->fatsv_emitted_bds_10, mm->MB, 7);
+                        writeFATSVEventMessage(mm, "datalink_caps", mm->MB, 7);
+                    }
+                    break;
+
+                case COMMB_ACAS_RA:
+                    // BDS 3,0: ACAS RA report
+                    if (memcmp(mm->MB, a->fatsv_emitted_bds_30, 7) != 0) {
+                        memcpy(a->fatsv_emitted_bds_30, mm->MB, 7);
+                        writeFATSVEventMessage(mm, "commb_acas_ra", mm->MB, 7);
+                    }
+                    break;
+
+                default:
+                    // nothing
+                    break;
             }
             break;
 
-        case COMMB_ACAS_RA:
-            // BDS 3,0: ACAS RA report
-            if (memcmp(mm->MB, a->fatsv_emitted_bds_30, 7) != 0) {
-                memcpy(a->fatsv_emitted_bds_30, mm->MB, 7);
-                writeFATSVEventMessage(mm, "commb_acas_ra", mm->MB, 7);
+        case 17:
+        case 18:
+            // DF 17/18: extended squitter
+            if (mm->metype == 28 && mm->mesub == 2 && memcmp(mm->ME, &a->fatsv_emitted_es_acas_ra, 7) != 0) {
+                // type 28 subtype 2: ACAS RA report
+                // first byte has the type/subtype, remaining bytes match the BDS 3,0 format
+                memcpy(a->fatsv_emitted_es_acas_ra, mm->ME, 7);
+                writeFATSVEventMessage(mm, "es_acas_ra", mm->ME, 7);
+            } else if (mm->metype == 31 && (mm->mesub == 0 || mm->mesub == 1) && memcmp(mm->ME, a->fatsv_emitted_es_status, 7) != 0) {
+                // aircraft operational status
+                memcpy(a->fatsv_emitted_es_status, mm->ME, 7);
+                writeFATSVEventMessage(mm, "es_op_status", mm->ME, 7);
             }
             break;
-
-        default:
-            // nothing
-            break;
-        }
-        break;
-
-    case 17:
-    case 18:
-        // DF 17/18: extended squitter
-        if (mm->metype == 28 && mm->mesub == 2 && memcmp(mm->ME, &a->fatsv_emitted_es_acas_ra, 7) != 0) {
-            // type 28 subtype 2: ACAS RA report
-            // first byte has the type/subtype, remaining bytes match the BDS 3,0 format
-            memcpy(a->fatsv_emitted_es_acas_ra, mm->ME, 7);
-            writeFATSVEventMessage(mm, "es_acas_ra", mm->ME, 7);
-        } else if (mm->metype == 31 && (mm->mesub == 0 || mm->mesub == 1) && memcmp(mm->ME, a->fatsv_emitted_es_status, 7) != 0) {
-            // aircraft operational status
-            memcpy(a->fatsv_emitted_es_status, mm->ME, 7);
-            writeFATSVEventMessage(mm, "es_op_status", mm->ME, 7);
-        }
-        break;
     }
 }
 
@@ -2080,25 +2160,28 @@ static inline float heading_difference(float h1, float h2)
     return (d < 180) ? d : (360 - d);
 }
 
- __attribute__ ((format (printf,6,7))) static char *appendFATSVMeta(char *p, char *end, const char *field, struct aircraft *a, const data_validity *source, const char *format, ...)
+__attribute__ ((format (printf,6,7))) static char *appendFATSVMeta(char *p, char *end, const char *field, struct aircraft *a, const data_validity *source, const char *format, ...)
 {
     const char *sourcetype;
     switch (source->source) {
-    case SOURCE_MODE_S:
-        sourcetype = "U";
-        break;
-    case SOURCE_MODE_S_CHECKED:
-        sourcetype = "S";
-        break;
-    case SOURCE_TISB:
-        sourcetype = "T";
-        break;
-    case SOURCE_ADSB:
-        sourcetype = "A";
-        break;
-    default:
-        // don't want to forward data sourced from these
-        return p;
+        case SOURCE_MODE_S:
+            sourcetype = "U";
+            break;
+        case SOURCE_MODE_S_CHECKED:
+            sourcetype = "S";
+            break;
+        case SOURCE_TISB:
+            sourcetype = "T";
+            break;
+        case SOURCE_ADSR:
+            sourcetype = "R";
+            break;
+        case SOURCE_ADSB:
+            sourcetype = "A";
+            break;
+        default:
+            // don't want to forward data sourced from these
+            return p;
     }
 
     if (!trackDataValid(source)) {
@@ -2136,12 +2219,12 @@ static inline float heading_difference(float h1, float h2)
 static const char *airground_enum_string(airground_t ag)
 {
     switch (ag) {
-    case AG_AIRBORNE:
-        return "A+";
-    case AG_GROUND:
-        return "G+";
-    default:
-        return "?";
+        case AG_AIRBORNE:
+            return "A+";
+        case AG_GROUND:
+            return "G+";
+        default:
+            return "?";
     }
 }
 
@@ -2163,7 +2246,7 @@ static void writeFATSV()
     next_update = now + 1000;
 
     for (a = Modes.aircrafts; a; a = a->next) {
-        if (a->messages < 2)  // basic filter for bad decodes
+        if (!a->reliable)
             continue;
 
         // don't emit if it hasn't updated since last time
@@ -2192,35 +2275,35 @@ static void writeFATSV()
         // if it hasn't changed altitude, heading, or speed much,
         // don't update so often
         int changed =
-            (altValid && abs(a->altitude_baro - a->fatsv_emitted_altitude_baro) >= 50) ||
-            (trackDataValid(&a->altitude_geom_valid) && abs(a->altitude_geom - a->fatsv_emitted_altitude_geom) >= 50) ||
-            (trackDataValid(&a->baro_rate_valid) && abs(a->baro_rate - a->fatsv_emitted_baro_rate) > 500) ||
-            (trackDataValid(&a->geom_rate_valid) && abs(a->geom_rate - a->fatsv_emitted_geom_rate) > 500) ||
-            (trackDataValid(&a->track_valid) && heading_difference(a->track, a->fatsv_emitted_track) >= 2) ||
-            (trackDataValid(&a->track_rate_valid) && fabs(a->track_rate - a->fatsv_emitted_track_rate) >= 0.5) ||
-            (trackDataValid(&a->roll_valid) && fabs(a->roll - a->fatsv_emitted_roll) >= 5.0) ||
-            (trackDataValid(&a->mag_heading_valid) && heading_difference(a->mag_heading, a->fatsv_emitted_mag_heading) >= 2) ||
-            (trackDataValid(&a->true_heading_valid) && heading_difference(a->true_heading, a->fatsv_emitted_true_heading) >= 2) ||
-            (gsValid && fabs(a->gs - a->fatsv_emitted_gs) >= 25) ||
-            (trackDataValid(&a->ias_valid) && unsigned_difference(a->ias, a->fatsv_emitted_ias) >= 25) ||
-            (trackDataValid(&a->tas_valid) && unsigned_difference(a->tas, a->fatsv_emitted_tas) >= 25) ||
-            (trackDataValid(&a->mach_valid) && fabs(a->mach - a->fatsv_emitted_mach) >= 0.02);
+                (altValid && abs(a->altitude_baro - a->fatsv_emitted_altitude_baro) >= 50) ||
+                (trackDataValid(&a->altitude_geom_valid) && abs(a->altitude_geom - a->fatsv_emitted_altitude_geom) >= 50) ||
+                (trackDataValid(&a->baro_rate_valid) && abs(a->baro_rate - a->fatsv_emitted_baro_rate) > 500) ||
+                (trackDataValid(&a->geom_rate_valid) && abs(a->geom_rate - a->fatsv_emitted_geom_rate) > 500) ||
+                (trackDataValid(&a->track_valid) && heading_difference(a->track, a->fatsv_emitted_track) >= 2) ||
+                (trackDataValid(&a->track_rate_valid) && fabs(a->track_rate - a->fatsv_emitted_track_rate) >= 0.5) ||
+                (trackDataValid(&a->roll_valid) && fabs(a->roll - a->fatsv_emitted_roll) >= 5.0) ||
+                (trackDataValid(&a->mag_heading_valid) && heading_difference(a->mag_heading, a->fatsv_emitted_mag_heading) >= 2) ||
+                (trackDataValid(&a->true_heading_valid) && heading_difference(a->true_heading, a->fatsv_emitted_true_heading) >= 2) ||
+                (gsValid && fabs(a->gs - a->fatsv_emitted_gs) >= 25) ||
+                (trackDataValid(&a->ias_valid) && unsigned_difference(a->ias, a->fatsv_emitted_ias) >= 25) ||
+                (trackDataValid(&a->tas_valid) && unsigned_difference(a->tas, a->fatsv_emitted_tas) >= 25) ||
+                (trackDataValid(&a->mach_valid) && fabs(a->mach - a->fatsv_emitted_mach) >= 0.02);
 
         int immediate =
-            (trackDataValid(&a->nav_altitude_mcp_valid) && unsigned_difference(a->nav_altitude_mcp, a->fatsv_emitted_nav_altitude_mcp) > 50) ||
-            (trackDataValid(&a->nav_altitude_fms_valid) && unsigned_difference(a->nav_altitude_fms, a->fatsv_emitted_nav_altitude_fms) > 50) ||
-            (trackDataValid(&a->nav_altitude_src_valid) && a->nav_altitude_src != a->fatsv_emitted_nav_altitude_src) ||
-            (trackDataValid(&a->nav_heading_valid) && heading_difference(a->nav_heading, a->fatsv_emitted_nav_heading) > 2) ||
-            (trackDataValid(&a->nav_modes_valid) && a->nav_modes != a->fatsv_emitted_nav_modes) ||
-            (trackDataValid(&a->nav_qnh_valid) && fabs(a->nav_qnh - a->fatsv_emitted_nav_qnh) > 0.8) || // 0.8 is the ES message resolution
-            (callsignValid && strcmp(a->callsign, a->fatsv_emitted_callsign) != 0) ||
-            (airgroundValid && a->airground == AG_AIRBORNE && a->fatsv_emitted_airground == AG_GROUND) ||
-            (airgroundValid && a->airground == AG_GROUND && a->fatsv_emitted_airground == AG_AIRBORNE) ||
-            (squawkValid && a->squawk != a->fatsv_emitted_squawk) ||
-            (trackDataValid(&a->emergency_valid) && a->emergency != a->fatsv_emitted_emergency);
+                (trackDataValid(&a->nav_altitude_mcp_valid) && unsigned_difference(a->nav_altitude_mcp, a->fatsv_emitted_nav_altitude_mcp) > 50) ||
+                (trackDataValid(&a->nav_altitude_fms_valid) && unsigned_difference(a->nav_altitude_fms, a->fatsv_emitted_nav_altitude_fms) > 50) ||
+                (trackDataValid(&a->nav_altitude_src_valid) && a->nav_altitude_src != a->fatsv_emitted_nav_altitude_src) ||
+                (trackDataValid(&a->nav_heading_valid) && heading_difference(a->nav_heading, a->fatsv_emitted_nav_heading) > 2) ||
+                (trackDataValid(&a->nav_modes_valid) && a->nav_modes != a->fatsv_emitted_nav_modes) ||
+                (trackDataValid(&a->nav_qnh_valid) && fabs(a->nav_qnh - a->fatsv_emitted_nav_qnh) > 0.8) || // 0.8 is the ES message resolution
+                (callsignValid && strcmp(a->callsign, a->fatsv_emitted_callsign) != 0) ||
+                (airgroundValid && a->airground == AG_AIRBORNE && a->fatsv_emitted_airground == AG_GROUND) ||
+                (airgroundValid && a->airground == AG_GROUND && a->fatsv_emitted_airground == AG_AIRBORNE) ||
+                (squawkValid && a->squawk != a->fatsv_emitted_squawk) ||
+                (trackDataValid(&a->emergency_valid) && a->emergency != a->fatsv_emitted_emergency);
 
-        uint64_t minAge= 1000;
-        if (immediate || changed) {
+        uint64_t minAge;
+        if (immediate) {
             // a change we want to emit right away
             minAge = 0;
         } else if (!positionValid) {
@@ -2233,10 +2316,10 @@ static void writeFATSV()
             minAge = 1000;
         } else if (!altValid || a->altitude_baro < 10000) {
             // Below 10000 feet, emit up to every 5s when changing, 10s otherwise
-            //minAge = (changed ? 5000 : 10000);
+            minAge = (changed ? 5000 : 10000);
         } else {
             // Above 10000 feet, emit up to every 10s when changing, 30s otherwise
-            //minAge = (changed ? 10000 : 30000);
+            minAge = (changed ? 10000 : 30000);
         }
 
         if ((now - a->fatsv_last_emitted) < minAge)
